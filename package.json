@@ -44,6 +44,8 @@
     "typings": "^0.7.7"
   },
   "scripts": {
-    "test": "gulp tests"
+    "test": "./node_modules/.bin/gulp tests",
+    "package": "./node_modules/.bin/gulp package",
+    "publish": "cd ./build/package && npm publish"
   }
 }
