@@ -1,5 +1,4 @@
-import {SanitizerConstraint} from "../../src/decorators";
-import {SanitizerInterface} from "../../src/SanitizerInterface";
+import {SanitizerInterface, SanitizerConstraint} from "../../src/index";
 
 @SanitizerConstraint()
 export class LetterReplacer implements SanitizerInterface {

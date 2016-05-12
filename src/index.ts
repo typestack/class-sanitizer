@@ -1,8 +1,3 @@
-/**
- * @deprecated
- * This file is deprecated. Import from ./index.ts instead.
- */
-
 import {Sanitizer} from "./Sanitizer";
 
 export * from "./decorators";

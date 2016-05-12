@@ -1,7 +1,7 @@
 {
   "name": "class-sanitizer",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Class-based sanitation in Typescript using decorators",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
@@ -44,8 +44,6 @@
     "typings": "^0.7.7"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp tests",
-    "package": "./node_modules/.bin/gulp package",
-    "publish": "cd ./build/package && npm publish"
+    "test": "./node_modules/.bin/gulp tests"
   }
 }
