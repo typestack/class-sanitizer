@@ -1,4 +1,4 @@
-import {Trim} from "../../src/decorators";
+import {Trim} from "../../src/index";
 
 export class Tag {
 

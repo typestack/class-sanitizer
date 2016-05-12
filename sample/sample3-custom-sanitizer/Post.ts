@@ -1,4 +1,4 @@
-import {Sanitize} from "../../src/decorators";
+import {Sanitize} from "../../src/index";
 import {LetterReplacer} from "./LetterReplacer";
 
 export class Post {

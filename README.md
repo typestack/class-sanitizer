@@ -25,8 +25,7 @@ Internally uses [validator.js][1] to make sanitation.
 Create your class and put some sanity decorators on its properties you want to sanitize:
 
 ```typescript
-import {sanitize} from "class-sanitizer/class-sanitizer";
-import {Trim, Rtrim, Blacklist} from "class-sanitizer/decorators";
+import {sanitize, Trim, Rtrim, Blacklist} from "class-sanitizer";
 
 export class Post {
 
@@ -59,8 +58,7 @@ If you have custom sanity logic you want to use as annotations you can do it thi
 1. First create a file, lets say `LetterReplacer.ts`, and create there a new class:
 
     ```typescript
-    import {SanitizerInterface} from "class-sanitizer/SanitizerInterface";
-    import {SanitizerConstraint} from "class-sanitizer/decorators";
+    import {SanitizerInterface, SanitizerConstraint} from "class-sanitizer";
 
     @SanitizerConstraint()
     export class LetterReplacer implements SanitizerInterface {
@@ -77,7 +75,7 @@ If you have custom sanity logic you want to use as annotations you can do it thi
 2. Then you can use your new sanitation constraint in your class:
 
     ```typescript
-    import {Sanitize} from "class-sanitizer/decorators";
+    import {Sanitize} from "class-sanitizer";
     import {LetterReplacer} from "./LetterReplacer";
 
     export class Post {
@@ -93,7 +91,7 @@ If you have custom sanity logic you want to use as annotations you can do it thi
 3. Now you can use sanitizer as usual:
 
     ```typescript
-    import {sanitize} from "class-sanitizer/class-sanitizer";
+    import {sanitize} from "class-sanitizer";
 
     sanitize(post);
     ```
@@ -104,8 +102,8 @@ Sanitizer supports service container in the case if want to inject dependencies 
 classes. Here is example how to integrate it with [typedi][2]:
 
 ```typescript
-import {Container} from "typedi/typedi";
-import {Sanitizer} from "class-sanitizer/class-sanitizer";
+import {Container} from "typedi";
+import {Sanitizer} from "class-sanitizer";
 
 // do this somewhere in the global application level:
 let sanitizer = Container.get(Sanitizer);
@@ -120,7 +118,7 @@ sanitizer.container = Container;
 There are several method exist in the Sanitizer that allows to perform non-decorator based sanitation:
 
 ```typescript
-import Sanitizer from "class-sanitizer/class-sanitizer";
+import Sanitizer from "class-sanitizer";
 
 Sanitizer.blacklist(str, chars);
 Sanitizer.escape(str);

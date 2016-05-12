@@ -1,4 +1,4 @@
-import {sanitize} from "../../src/class-sanitizer";
+import {sanitize} from "../../src/index";
 import {Post} from "./Post";
 
 let post1 = new Post();
