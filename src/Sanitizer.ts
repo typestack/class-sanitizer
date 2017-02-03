@@ -45,6 +45,7 @@ export class Sanitizer {
         this.metadataStorage
             .getSanitizeMetadatasForObject(object.constructor)
             .filter((metadata) =>{
+                  //First cast it to any because Function does not initially have a name property.
                   let metaDataObject:any = metadata.object.constructor;
                   let metaDataObjectName = metaDataObject.name;
                   let objectName = object.constructor.name;
