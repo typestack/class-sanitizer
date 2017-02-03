@@ -31,6 +31,7 @@ export class Sanitizer {
     /**
      * Performs sanitation of the given object based on annotations used in given object class.
      */
+    /*
     sanitize(object: any): void {
         this.metadataStorage
             .getSanitizeMetadatasForObject(object.constructor)
@@ -38,7 +39,20 @@ export class Sanitizer {
             .forEach(metadata => object[metadata.propertyName] = this.sanitizeValue(object[metadata.propertyName], metadata));
 
         // todo: implemented nested sanitation
+    }*/
+
+    sanitize(object: any): void {
+        this.metadataStorage
+            .getSanitizeMetadatasForObject(object.constructor)
+            .filter((metadata) =>{
+                  let metaDataObject:any = metadata.object.constructor;
+                  let metaDataObjectName = metaDataObject.name;
+                  let objectName = object.constructor.name;
+                  return !!object[metadata.propertyName] && metaDataObjectName == objectName
+             })
+            .forEach(metadata => object[metadata.propertyName] = this.sanitizeValue(object[metadata.propertyName], metadata));
     }
+  
 
     /**
      * Performs sanitation of the given object based on annotations used in given object class.
