@@ -1,7 +1,7 @@
 {
-  "name": "class-sanitizer",
+  "name": "sw-class-sanitizer",
   "private": true,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Class-based sanitation in Typescript using decorators",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
@@ -23,12 +23,15 @@
     "typescript-sanitizer"
   ],
   "dependencies": {
+    "es6-promise": "^4.0.5",
+    "q": "^1.4.1",
     "validator": "^5.1.0"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
     "@types/chai": "^3.4.35",
     "@types/chai-as-promised": "^0.0.29",
+    "@types/es6-promise": "0.0.32",
     "@types/gulp": "^3.8.32",
     "@types/mocha": "^2.2.0",
     "@types/node": "^7.0.5",

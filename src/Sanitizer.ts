@@ -3,6 +3,7 @@ import {SanitizeTypes} from "./SanitizeTypes";
 import {defaultMetadataStorage} from "./metadata/MetadataStorage";
 import {SanitizerInterface} from "./SanitizerInterface";
 import * as validatatorJs from "validator";
+import {Promise} from "es6-promise";
 
 /**
  * Sanitizer performs sanitation of the given object based on its metadata.
