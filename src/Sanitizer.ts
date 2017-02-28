@@ -13,14 +13,14 @@ export class Sanitizer {
     // Properties
     // -------------------------------------------------------------------------
 
-    private _container: { get(type: Function): any };
+    private _container: {get(type: Function): any};
     private metadataStorage = defaultMetadataStorage;
 
     // -------------------------------------------------------------------------
     // Accessors
     // -------------------------------------------------------------------------
 
-    set container(container: { get(type: Function): any }) {
+    set container(container: {get(type: Function): any}) {
         this._container = container;
     }
 
@@ -82,7 +82,7 @@ export class Sanitizer {
     /**
      * Canonicalize an email address.
      */
-    normalizeEmail(str: string, lowercase?: boolean): string {
+    normalizeEmail(str: string, lowercase?: boolean): string | false {
         return validatatorJs.normalizeEmail(str, lowercase);
     }
 
@@ -107,13 +107,19 @@ export class Sanitizer {
      * Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
      */
     toBoolean(input: any, isStrict?: boolean): boolean {
-        return validatatorJs.toBoolean(input, isStrict);
+        if (typeof input === "string") {
+            return validatatorJs.toBoolean(input, isStrict);
+        }
+        return !!input;
     }
 
     /**
      * Convert the input to a date, or null if the input is not a date.
      */
     toDate(input: any): Date {
+        if (input instanceof Date) {
+            return input;
+        }
         return validatatorJs.toDate(input);
     }
 
@@ -121,6 +127,9 @@ export class Sanitizer {
      * Convert the input to a float.
      */
     toFloat(input: any): number {
+        if (typeof input === "number") {
+            return input;
+        }
         return validatatorJs.toFloat(input);
     }
 
@@ -128,6 +137,9 @@ export class Sanitizer {
      * Convert the input to an integer, or NaN if the input is not an integer.
      */
     toInt(input: any, radix?: number): number {
+        if (typeof input === "number") {
+            return input;
+        }
         return validatatorJs.toInt(input, radix);
     }
 
