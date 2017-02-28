@@ -26,6 +26,14 @@
     "validator": "^5.1.0"
   },
   "devDependencies": {
+    "@types/assertion-error": "^1.0.30",
+    "@types/chai": "^3.4.35",
+    "@types/chai-as-promised": "^0.0.29",
+    "@types/gulp": "^3.8.32",
+    "@types/mocha": "^2.2.0",
+    "@types/node": "^7.0.5",
+    "@types/sinon": "^1.16.35",
+    "@types/validator": "^5.1.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
     "del": "^2.0.2",
@@ -40,8 +48,7 @@
     "sinon-chai": "^2.8.0",
     "tslint": "^3.5.0",
     "tslint-stylish": "^2.1.0-beta",
-    "typescript": "^1.8.7",
-    "typings": "^0.7.7"
+    "typescript": "^2.2.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/gulp tests"

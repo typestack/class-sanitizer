@@ -64,7 +64,7 @@ export class MetadataStorage {
                 !(targetConstructor.prototype instanceof (metadata.object as Function)))
                 return false;
 
-            return true
+            return true;
         });
     }
 

@@ -9,10 +9,6 @@ Internally uses [validator.js][1] to make sanitation.
 
     `npm install class-sanitizer --save`
 
-2. Use [typings](https://github.com/typings/typings) to install all required definition dependencies.
-
-    `typings install`
-
 3. ES6 features are used, so you may want to install [es6-shim](https://github.com/paulmillr/es6-shim) too:
 
     `npm install es6-shim --save`
