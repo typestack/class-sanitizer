@@ -139,7 +139,7 @@ export class Sanitizer {
      */
     toInt(input: any, radix?: number): number {
         if (typeof input === "number") {
-            return input;
+            return input | 0;
         }
         return validatatorJs.toInt(input, radix);
     }
