@@ -23,15 +23,14 @@
     "typescript-sanitizer"
   ],
   "dependencies": {
-    "es6-promise": "^4.0.5",
-    "q": "^1.4.1",
+    "es6-shim": "^0.35.3",
     "validator": "^5.1.0"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
     "@types/chai": "^3.4.35",
     "@types/chai-as-promised": "^0.0.29",
-    "@types/es6-promise": "0.0.32",
+    "@types/es6-shim": "^0.31.32",
     "@types/gulp": "^3.8.32",
     "@types/mocha": "^2.2.0",
     "@types/node": "^7.0.5",
