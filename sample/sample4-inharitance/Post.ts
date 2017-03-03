@@ -1,5 +1,5 @@
 import {Trim, Rtrim, Blacklist} from "../../src/decorators";
-import {BasePost} from './BaseContent';
+import {BasePost} from "./BaseContent";
 
 export class Post extends BasePost {
 
