@@ -23,7 +23,6 @@
     "typescript-sanitizer"
   ],
   "dependencies": {
-    "es6-shim": "^0.35.3",
     "validator": "^5.1.0"
   },
   "devDependencies": {
