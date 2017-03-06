@@ -1,7 +1,7 @@
 {
   "name": "class-sanitizer",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Class-based sanitation in Typescript using decorators",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
@@ -47,6 +47,7 @@
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
+    "ts-node": "^2.1.0",
     "tslint": "^3.5.0",
     "tslint-stylish": "^2.1.0-beta",
     "typescript": "^2.2.1"
