@@ -1,0 +1,18 @@
+import {SanitizerInterface, SanitizerConstraint} from "class-sanitizer";
+
+const createDOMPurify = require('dompurify');
+const jsdom = require('jsdom');
+const window = jsdom.jsdom('', {
+    features: {
+        FetchExternalResources: false, // disables resource loading over HTTP / filesystem
+        ProcessExternalResources: false // do not execute JS within script blocks
+    }
+}).defaultView;
+const DOMPurify = createDOMPurify(window);
+
+@SanitizerConstraint()
+export class SanitizeHtml implements SanitizerInterface {
+    sanitize(value: any): any {
+        return DOMPurify.sanitize(value);
+    }
+}
