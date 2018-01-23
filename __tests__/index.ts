@@ -64,7 +64,7 @@ describe('Sanitizer', () => {
       }
     }
 
-    const { sanitize, Trim } = await import('../src/index');
+    const { sanitize } = await import('../src/index');
 
     class Post {
       @Sanitize(LetterReplacer) title: string;
