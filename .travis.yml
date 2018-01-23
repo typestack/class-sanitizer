@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+- node
+
+script: yarn && yarn test && yarn build
+
+deploy:
+  provider: npm
+  email: "npm@hollowverse.com"
+  api_key: $NPM_AUTH_TOKEN
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+
+cache: yarn
+
+notifications:
+  email: false
