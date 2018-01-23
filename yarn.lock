@@ -3521,6 +3521,10 @@ tslib@^1.8.0, tslib@^1.8.1:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
 
+tslint-config-prettier@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.6.0.tgz#fec1ee8fb07e8f033c63fed6b135af997f31962a"
+
 tslint-stylish@^2.1.0-beta:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tslint-stylish/-/tslint-stylish-2.1.0.tgz#8cda3c38c9cab54e7b22df7cf42b8ef115dcd95f"

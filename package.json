@@ -82,6 +82,7 @@
     "ts-jest": "^22.0.1",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.6.0",
     "tslint-stylish": "^2.1.0-beta",
     "typescript": "^2.6.2",
     "yarnhook": "^0.1.1"
@@ -89,7 +90,9 @@
   "scripts": {
     "clean": "del-cli build",
     "pretest": "run-p clean",
-    "test": "jest",
+    "lint": "tslint --exclude 'node_modules' --project tsconfig.json",
+    "jest": "jest",
+    "test": "run-p --aggregate-output -l lint jest",
     "dev": "jest --watch",
     "build/ts": "tsc",
     "build": "run-s clean build/ts",
