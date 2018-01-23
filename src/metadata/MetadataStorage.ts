@@ -58,13 +58,7 @@ export class MetadataStorage {
      */
     getSanitizeMetadatasForObject(targetConstructor: Function): SanitationMetadata[] {
         return this.sanitationMetadata.filter(function (metadata) {
-            if (metadata.object === targetConstructor)
-                return false;
-            if (metadata.object instanceof Function &&
-                !(targetConstructor.prototype instanceof (metadata.object as Function)))
-                return false;
-
-            return true;
+            return metadata.object.constructor === targetConstructor;
         });
     }
 
