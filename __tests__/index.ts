@@ -15,6 +15,7 @@ describe('Sanitizer', () => {
       Rtrim,
       Ltrim,
       ToInt,
+      ToBoolean,
       NormalizeEmail,
       sanitize,
     } = await import('../src/index');
@@ -28,6 +29,9 @@ describe('Sanitizer', () => {
 
       @ToInt()
       age: any;
+
+      @ToBoolean()
+      isPremium: any;
     }
 
     const a = new A();
@@ -35,13 +39,17 @@ describe('Sanitizer', () => {
     a.text = 'test ';
     a.email = 'EXAMPLE+work@gmail.com';
     a.age = '18';
+    a.isPremium = '1';
 
     sanitize(a);
 
     expect(a.bio).not.toStartWith(' ');
     expect(a.text).not.toEndWith(' ');
     expect(a.email).toBe('example@gmail.com');
+    expect(a.age).toBeNumber();
     expect(a.age).toBe(18);
+    expect(a.isPremium).toBeBoolean();
+    expect(a.isPremium).toBe(true);
   });
 
   test('Nested objects');
