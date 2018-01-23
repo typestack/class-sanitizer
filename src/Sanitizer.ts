@@ -18,7 +18,7 @@ export class Sanitizer {
   /**
    * Performs sanitization of the given object based on annotations used in given object class.
    */
-  sanitize(object: any): void {
+  sanitize(object: any) {
     this.metadataStorage
       .getSanitizeMetadataForObject(object.constructor)
       .filter(metadata => !!object[metadata.propertyName])
@@ -29,8 +29,6 @@ export class Sanitizer {
             metadata,
           )),
       );
-
-    // @TODO: implemented nested sanitization
   }
 
   /**
@@ -134,7 +132,7 @@ export class Sanitizer {
     if (typeof input === 'number') {
       return input;
     }
-    
+
     return validator.toInt(input, radix);
   }
 

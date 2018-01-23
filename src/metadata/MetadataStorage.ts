@@ -47,11 +47,18 @@ export class MetadataStorage {
   /**
    * Gets all sanitization metadata for the given targetConstructor with the given groups.
    */
-  getSanitizeMetadataForObject<T>(
-    targetConstructor: object,
+  getSanitizeMetadataForObject(
+    targetConstructor: any,
   ): SanitizationMetadata[] {
-    return this.sanitizationMetadata.filter((metadata) => {
-      return metadata.object.constructor === targetConstructor;
+    return this.sanitizationMetadata.filter(metadata => {
+      if (typeof metadata.object.constructor === 'function') {
+        return (
+          metadata.object.constructor === targetConstructor ||
+          targetConstructor.prototype instanceof metadata.object.constructor
+        );
+      }
+
+      return false;
     });
   }
 

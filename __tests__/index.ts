@@ -1,16 +1,20 @@
 import 'reflect-metadata';
 import 'expect-more-jest';
+import { SanitizerInterface } from '../src/SanitizerInterface';
 
 describe('Sanitizer', () => {
   beforeEach(() => {
+    // Because `class-sanitizer` stores metadata of all annotated classes in a
+    // single, global object, we make sure to get a fresh copy of the 
+    // module for every test.
     jest.resetModules();
   });
 
-  test('It works', async () => {
+  test('Basic sanitization', async () => {
     const {
       Rtrim,
       Ltrim,
-      Blacklist,
+      ToInt,
       NormalizeEmail,
       sanitize,
     } = await import('../src/index');
@@ -21,43 +25,105 @@ describe('Sanitizer', () => {
       @NormalizeEmail() email: string;
 
       @Ltrim() bio: string;
+
+      @ToInt()
+      age: any;
     }
 
     const a = new A();
     a.bio = ' abcdef';
     a.text = 'test ';
     a.email = 'EXAMPLE+work@gmail.com';
+    a.age = '18';
 
     sanitize(a);
 
     expect(a.bio).not.toStartWith(' ');
     expect(a.text).not.toEndWith(' ');
     expect(a.email).toBe('example@gmail.com');
+    expect(a.age).toBe(18);
   });
 
-  test(
-    'Two classes that both have a property with the same name are ' + 
-    'not confused when performing sanitization', async () => {
-    const { Trim, sanitize } = await import('../src/index');
+  test('Nested objects');
 
-    class A {
+  test('Custom sanitizer', async () => {
+    const { Sanitize, SanitizerConstraint } = await import('../src/index');
+
+    @SanitizerConstraint()
+    class LetterReplacer implements SanitizerInterface {
+      sanitize(text: string): string {
+        return text.replace(/o/g, 'w');
+      }
+    }
+
+    const { sanitize, Trim } = await import('../src/index');
+
+    class Post {
+      @Sanitize(LetterReplacer) title: string;
+    }
+
+    const post1 = new Post();
+    post1.title = 'Hello world';
+
+    sanitize(post1);
+
+    expect(post1.title).toMatch('Hellw wwrld');
+  });
+
+  test('Inheritance', async () => {
+    const { sanitize, ToInt, Trim, Blacklist, Rtrim } = await import('../src/index');
+
+    class BasePost {
+      @ToInt() rating: any;
+    }
+
+    class Post extends BasePost {
+      @Trim() title: string;
+    
+      @Rtrim(['.'])
+      @Blacklist(/(1-9)/)
       text: string;
     }
+    
+    const post1 = new Post();
+    post1.title = ' Hello world ';
+    post1.text = '1. this is a great (2) post about hello 3 world.';
+    post1.rating = '12.2';
 
-    class B {
-      @Trim() text: string;
-    }
+    sanitize(post1);
 
-    const a = new A();
-    const b = new B();
-
-    a.text = 'space at the end ';
-    b.text = 'space at the end ';
-
-    sanitize(a);
-    sanitize(b);
-
-    expect(a.text).toEndWith(' ');
-    expect(b.text).not.toEndWith(' ');
+    expect(post1.title).toMatch('Hello world');
+    expect(post1.text).toStartWith('. this is a great  post about hello  world');
+    expect(post1.text).not.toEndWith('.');
+    expect(post1.rating).toBe(12);
   });
+
+
+  test(
+    'Two classes that both have a property with the same name are ' +
+      'not confused when performing sanitization',
+    async () => {
+      const { Trim, sanitize } = await import('../src/index');
+
+      class A {
+        text: string;
+      }
+
+      class B {
+        @Trim() text: string;
+      }
+
+      const a = new A();
+      const b = new B();
+
+      a.text = 'space at the end ';
+      b.text = 'space at the end ';
+
+      sanitize(a);
+      sanitize(b);
+
+      expect(a.text).toEndWith(' ');
+      expect(b.text).not.toEndWith(' ');
+    },
+  );
 });

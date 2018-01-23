@@ -152,12 +152,8 @@ Sanitizer.whitelist(str, chars);
 
 ## Samples
 
-Take a look on samples in [./sample](https://github.com/pleerock/class-sanitizer/tree/master/sample) for more examples of
-usages.
+Take a look at [the tests](./__tests__) for more examples of usages.
 
-## Todos
-
-* cover with tests
 
 [1]: https://github.com/chriso/validator.js
 [2]: https://github.com/pleerock/typedi

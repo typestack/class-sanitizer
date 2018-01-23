@@ -87,7 +87,10 @@ export function Escape(annotationOptions?: SanitizationOptions) {
 /**
  * Trim characters from the left-side of the input.
  */
-export function Ltrim(chars?: string[], annotationOptions?: SanitizationOptions) {
+export function Ltrim(
+  chars?: string[],
+  annotationOptions?: SanitizationOptions,
+) {
   return (object: object, propertyName: string) => {
     defaultMetadataStorage.addSanitizationMetadata({
       type: SanitizeTypes.LTRIM,
@@ -126,7 +129,10 @@ export function NormalizeEmail(
 /**
  * Trim characters from the right-side of the input.
  */
-export function Rtrim(chars?: string[], annotationOptions?: SanitizationOptions) {
+export function Rtrim(
+  chars?: string[],
+  annotationOptions?: SanitizationOptions,
+) {
   return (object: object, propertyName: string) => {
     defaultMetadataStorage.addSanitizationMetadata({
       type: SanitizeTypes.RTRIM,
@@ -258,7 +264,10 @@ export function ToString(annotationOptions?: SanitizationOptions) {
 /**
  * Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.
  */
-export function Trim(chars?: string[], annotationOptions?: SanitizationOptions) {
+export function Trim(
+  chars?: string[],
+  annotationOptions?: SanitizationOptions,
+) {
   return (object: object, propertyName: string) => {
     defaultMetadataStorage.addSanitizationMetadata({
       type: SanitizeTypes.TRIM,
