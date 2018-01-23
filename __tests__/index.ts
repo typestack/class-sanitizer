@@ -107,6 +107,7 @@ describe('Sanitizer', () => {
   });
 
 
+  /* Test for https://github.com/typestack/class-sanitizer/issues/8 */
   test(
     'Two classes that both have a property with the same name are ' +
       'not confused when performing sanitization',
