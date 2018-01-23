@@ -1,6 +1,5 @@
-import { ToInt } from "../../src/decorators";
+import { ToInt } from '../../src/decorators';
 
 export class BasePost {
-    @ToInt()
-    rating: any;
+  @ToInt() rating: any;
 }

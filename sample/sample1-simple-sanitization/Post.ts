@@ -1,15 +1,12 @@
-import {Trim, Rtrim, Blacklist} from "../../src/index";
+import { Trim, Rtrim, Blacklist } from '../../src/index';
 
 export class Post {
+  @Trim() title: string;
 
-    @Trim()
-    title: string;
+  @Rtrim(['.'])
+  @Blacklist(/(1-9)/)
+  text: string;
 
-    @Rtrim(["."])
-    @Blacklist(/(1-9)/)
-    text: string;
-
-    // todo: fix it: @ToInt()
-    rating: number;
-
+  // todo: fix it: @ToInt()
+  rating: number;
 }

@@ -8,17 +8,20 @@ describe('Sanitizer', () => {
   });
 
   test('It works', async () => {
-    const { Rtrim, Ltrim, Blacklist, NormalizeEmail, sanitize } = await import('../src/index');
+    const {
+      Rtrim,
+      Ltrim,
+      Blacklist,
+      NormalizeEmail,
+      sanitize,
+    } = await import('../src/index');
 
     class A {
-      @Rtrim()
-      text: string;
+      @Rtrim() text: string;
 
-      @NormalizeEmail()
-      email: string;
+      @NormalizeEmail() email: string;
 
-      @Ltrim()
-      bio: string;
+      @Ltrim() bio: string;
     }
 
     const a = new A();
@@ -33,17 +36,15 @@ describe('Sanitizer', () => {
     expect(a.email).toBe('example@gmail.com');
   });
 
-
   test('Two classes that both have a property with the same name are not confused when performing sanitization', async () => {
     const { Trim, sanitize } = await import('../src/index');
-    
+
     class A {
       text: string;
     }
 
     class B {
-      @Trim()
-      text: string;
+      @Trim() text: string;
     }
 
     const a = new A();
