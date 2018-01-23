@@ -1,21 +1,18 @@
 {
-    "version": "1.8.0",
-    "compilerOptions": {
-        "outDir": "build/compiled",
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "declaration": true
-    },
-    "exclude": [
-        "build",
-        "node_modules",
-        "typings/browser.d.ts",
-        "typings/browser"
-    ]
+  "version": "1.8.0",
+  "compilerOptions": {
+    "outDir": "build/compiled",
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "declaration": true
+  },
+  "exclude": [
+    "__tests__",
+    "build"
+  ]
 }

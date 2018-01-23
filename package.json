@@ -1,7 +1,7 @@
 {
   "name": "@forabi/class-sanitizer",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Class-based sanitation in Typescript using decorators",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
@@ -37,41 +37,53 @@
     "typescript-sanitizer"
   ],
   "dependencies": {
-    "validator": "^5.1.0"
+    "validator": "^9.2.0"
+  },
+  "lint-staged": {
+    "**/*.md": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.ts{x,}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test",
+      "pre-push": "yarn test",
+      "post-merge": "yarnhook",
+      "post-checkout": "yarnhook",
+      "post-rewrite": "yarnhook"
+    }
   },
   "devDependencies": {
-    "@types/assertion-error": "^1.0.30",
-    "@types/chai": "^3.4.35",
-    "@types/chai-as-promised": "^0.0.29",
-    "@types/es6-shim": "^0.31.32",
-    "@types/gulp": "^3.8.32",
     "@types/jest": "^22.0.1",
-    "@types/mocha": "^2.2.0",
     "@types/node": "^7.0.5",
-    "@types/sinon": "^1.16.35",
-    "@types/validator": "^5.1.0",
-    "chai": "^3.4.1",
-    "chai-as-promised": "^5.2.0",
-    "del": "^2.0.2",
+    "@types/validator": "^6.3.0",
+    "del-cli": "^1.1.0",
     "expect-more-jest": "^1.0.1",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^2.2.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-shell": "^0.5.0",
-    "gulp-tslint": "^4.3.3",
-    "gulpclass": "0.1.0",
+    "husky": "^0.14.3",
     "jest": "^22.1.4",
-    "mocha": "^2.3.4",
+    "lint-staged": "^6.0.1",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.10.2",
     "reflect-metadata": "^0.1.12",
-    "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0",
     "ts-jest": "^22.0.1",
-    "ts-node": "^2.1.0",
-    "tslint": "^3.5.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
     "tslint-stylish": "^2.1.0-beta",
-    "typescript": "^2.2.1"
+    "typescript": "^2.6.2",
+    "yarnhook": "^0.1.1"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp tests"
+    "clean": "del-cli build",
+    "pretest": "run-p clean",
+    "test": "jest",
+    "dev": "jest --watch",
+    "build/ts": "tsc",
+    "build": "run-s clean build/ts",
+    "lint-staged": "lint-staged"
   }
 }

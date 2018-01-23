@@ -83,7 +83,7 @@ export class Sanitizer {
      * Canonicalize an email address.
      */
     normalizeEmail(str: string, lowercase?: boolean): string | false {
-        return validatatorJs.normalizeEmail(str, lowercase);
+        return validatatorJs.normalizeEmail(str, { lowercase });
     }
 
     /**
