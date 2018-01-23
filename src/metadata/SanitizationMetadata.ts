@@ -1,16 +1,16 @@
 /**
- * This metadata interface contains information for sanitation.
+ * This metadata interface contains information for sanitization.
  */
-export interface SanitationMetadata {
+export interface SanitizationMetadata {
   /**
-   * Sanitation type.
+   * Sanitization type.
    */
   type: number;
 
   /**
    * Object that is used to be sanitized.
    */
-  object: Object;
+  object: object;
 
   /**
    * Property of the object to be sanitized.
@@ -28,7 +28,7 @@ export interface SanitationMetadata {
   value2?: any;
 
   /**
-   * Sanitation message to be shown in the case of error.
+   * Sanitization message to be shown in the case of error.
    */
   message?: string;
 

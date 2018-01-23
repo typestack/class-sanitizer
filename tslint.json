@@ -1,10 +1,12 @@
 {
   "extends": [
     "tslint:latest",
+    "tslint-microsoft-contrib",
     "tslint-config-prettier"
   ],
   "rules": {
     "max-line-length": [true, 120],
+    "object-literal-sort-keys": false,
     "no-unsafe-any": false,
     "strict-boolean-expressions": false,
     "missing-jsdoc": false,
@@ -18,12 +20,12 @@
     "no-relative-imports": false,
     "semicolon": [true, "ignore-bound-class-methods"],
 
-    "no-default-export": true,
-
-    // microsoft-tslint-contrib
+    // tslint-microsoft-contrib
     "import-name": false,
     "export-name": false,
+    "mocha-no-side-effect-code": false,
     "no-import-side-effect": false,
+    "completed-docs": false,
     "misnamed-import": false,
     "restrict-plus-operand": false,
     "no-single-line-block-comment": false,

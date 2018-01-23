@@ -1,7 +1,7 @@
 # class-sanitizer
 
-Allows to use decorator and non-decorator based sanitation in your Typescript classes.
-Internally uses [validator.js][1] to make sanitation.
+Allows to use decorator and non-decorator based sanitization in your Typescript classes.
+Internally uses [validator.js][1] to make sanitization.
 
 ## Installation
 
@@ -47,7 +47,7 @@ console.log(post);
 // }
 ```
 
-## Custom sanitation classes
+## Custom sanitization classes
 
 If you have custom sanity logic you want to use as annotations you can do it this way:
 
@@ -66,9 +66,9 @@ If you have custom sanity logic you want to use as annotations you can do it thi
     }
     ```
 
-    Your class must implement `SanitizerInterface` interface and its `sanitize` method, which defines sanitation logic.
+    Your class must implement `SanitizerInterface` interface and its `sanitize` method, which defines sanitization logic.
 
-2. Then you can use your new sanitation constraint in your class:
+2. Then you can use your new sanitization constraint in your class:
 
     ```typescript
     import {Sanitize} from "class-sanitizer";
@@ -82,7 +82,7 @@ If you have custom sanity logic you want to use as annotations you can do it thi
     }
     ```
 
-    Here we set our newly created `LetterReplacer` sanitation constraint for `Post.title`.
+    Here we set our newly created `LetterReplacer` sanitization constraint for `Post.title`.
 
 3. Now you can use sanitizer as usual:
 
@@ -109,9 +109,9 @@ sanitizer.container = Container;
 // also you can inject classes using constructor injection into your custom sanitizers.
 ```
 
-## Manual sanitation
+## Manual sanitization
 
-There are several method exist in the Sanitizer that allows to perform non-decorator based sanitation:
+There are several method exist in the Sanitizer that allows to perform non-decorator based sanitization:
 
 ```typescript
 import Sanitizer from "class-sanitizer";

@@ -2,7 +2,7 @@
   "name": "@forabi/class-sanitizer",
   "private": true,
   "version": "0.1.0",
-  "description": "Class-based sanitation in Typescript using decorators",
+  "description": "Class-based sanitization in Typescript using decorators",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "author": {
@@ -35,7 +35,7 @@
   },
   "tags": [
     "sanitizer",
-    "sanitation",
+    "sanitization",
     "typescript",
     "typescript-sanitizer"
   ],
@@ -83,6 +83,7 @@
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.6.0",
+    "tslint-microsoft-contrib": "^5.0.2",
     "tslint-stylish": "^2.1.0-beta",
     "typescript": "^2.6.2",
     "yarnhook": "^0.1.1"
@@ -92,7 +93,8 @@
     "pretest": "run-p clean",
     "lint": "tslint --exclude 'node_modules' --project tsconfig.json",
     "jest": "jest",
-    "test": "run-p --aggregate-output -l lint jest",
+    "check-ts": "tsc --noEmit",
+    "test": "run-p --aggregate-output -l check-ts lint jest",
     "dev": "jest --watch",
     "build/ts": "tsc",
     "build": "run-s clean build/ts",

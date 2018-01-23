@@ -3525,6 +3525,12 @@ tslint-config-prettier@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.6.0.tgz#fec1ee8fb07e8f033c63fed6b135af997f31962a"
 
+tslint-microsoft-contrib@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/tslint-microsoft-contrib/-/tslint-microsoft-contrib-5.0.2.tgz#ecc2a797f777a12f0066944cec0c81a9e7c59ee9"
+  dependencies:
+    tsutils "^2.12.1"
+
 tslint-stylish@^2.1.0-beta:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/tslint-stylish/-/tslint-stylish-2.1.0.tgz#8cda3c38c9cab54e7b22df7cf42b8ef115dcd95f"

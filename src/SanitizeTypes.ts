@@ -1,5 +1,5 @@
 /**
- * Sanitation types.
+ * sanitization types.
  */
 export enum SanitizeTypes {
   BLACKLIST = 1,

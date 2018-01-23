@@ -5,12 +5,12 @@ import { SanitizerInterface } from '../SanitizerInterface';
  */
 export interface ConstraintMetadata {
   /**
-   * Object class which performs sanitation.
+   * Object class which performs sanitization.
    */
-  object: Function;
+  object: object;
 
   /**
-   * Instance of the object which performs sanitation.
+   * Instance of the object which performs sanitization.
    */
   instance?: SanitizerInterface;
 }

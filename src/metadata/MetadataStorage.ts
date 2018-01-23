@@ -1,33 +1,25 @@
-import { SanitationMetadata } from './SanitationMetadata';
+import { SanitizationMetadata } from './SanitizationMetadata';
 import { ConstraintMetadata } from './ConstraintMetadata';
 
 /**
- * Storage all metadatas of this library.
+ * Storage all metadata of this library.
  */
 export class MetadataStorage {
-  // -------------------------------------------------------------------------
-  // Properties
-  // -------------------------------------------------------------------------
-
-  private _sanitationMetadata: SanitationMetadata[] = [];
-  private _constraintMetadatas: ConstraintMetadata[] = [];
-
-  // -------------------------------------------------------------------------
-  // Getter Methods
-  // -------------------------------------------------------------------------
+  private _sanitizationMetadata: SanitizationMetadata[] = [];
+  private _constraintMetadata: ConstraintMetadata[] = [];
 
   /**
-   * Gets all sanitation metadatas saved in this storage.
+   * Gets all sanitization metadata saved in this storage.
    */
-  get sanitationMetadata(): SanitationMetadata[] {
-    return this._sanitationMetadata;
+  get sanitizationMetadata(): SanitizationMetadata[] {
+    return this._sanitizationMetadata;
   }
 
   /**
-   * Gets all constraint metadatas saved in this storage.
+   * Gets all constraint metadata saved in this storage.
    */
-  get constraintMetadatas(): ConstraintMetadata[] {
-    return this._constraintMetadatas;
+  get constraintMetadata(): ConstraintMetadata[] {
+    return this._constraintMetadata;
   }
 
   // -------------------------------------------------------------------------
@@ -35,17 +27,17 @@ export class MetadataStorage {
   // -------------------------------------------------------------------------
 
   /**
-   * Adds a new sanitation metadata.
+   * Adds a new sanitization metadata.
    */
-  addSanitationMetadata(metadata: SanitationMetadata) {
-    this.sanitationMetadata.push(metadata);
+  addSanitizationMetadata(metadata: SanitizationMetadata) {
+    this.sanitizationMetadata.push(metadata);
   }
 
   /**
    * Adds a new constraint metadata.
    */
   addConstraintMetadata(metadata: ConstraintMetadata) {
-    this.constraintMetadatas.push(metadata);
+    this.constraintMetadata.push(metadata);
   }
 
   // -------------------------------------------------------------------------
@@ -53,27 +45,27 @@ export class MetadataStorage {
   // -------------------------------------------------------------------------
 
   /**
-   * Gets all sanitation metadatas for the given targetConstructor with the given groups.
+   * Gets all sanitization metadata for the given targetConstructor with the given groups.
    */
-  getSanitizeMetadatasForObject(
-    targetConstructor: Function,
-  ): SanitationMetadata[] {
-    return this.sanitationMetadata.filter(function(metadata) {
+  getSanitizeMetadataForObject<T>(
+    targetConstructor: object,
+  ): SanitizationMetadata[] {
+    return this.sanitizationMetadata.filter((metadata) => {
       return metadata.object.constructor === targetConstructor;
     });
   }
 
   /**
-   * Gets all sanitizator constraints for the given object.
+   * Gets all saniztizer constraints for the given object.
    */
-  getSanitizeConstraintsForObject(object: Function): ConstraintMetadata[] {
-    return this.constraintMetadatas.filter(
+  getSanitizeConstraintsForObject(object: object): ConstraintMetadata[] {
+    return this.constraintMetadata.filter(
       metadata => metadata.object === object,
     );
   }
 }
 
 /**
- * Default metadata storage used as singleton and can be used to storage all metadatas in the system.
+ * Default metadata storage used as singleton and can be used to storage all metadata in the system.
  */
 export let defaultMetadataStorage = new MetadataStorage();

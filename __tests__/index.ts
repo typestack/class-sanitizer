@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import 'expect-more-jest';
-import { sanitize } from '../src/index';
 
 describe('Sanitizer', () => {
   beforeEach(() => {
@@ -36,7 +35,9 @@ describe('Sanitizer', () => {
     expect(a.email).toBe('example@gmail.com');
   });
 
-  test('Two classes that both have a property with the same name are not confused when performing sanitization', async () => {
+  test(
+    'Two classes that both have a property with the same name are ' + 
+    'not confused when performing sanitization', async () => {
     const { Trim, sanitize } = await import('../src/index');
 
     class A {

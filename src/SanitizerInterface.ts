@@ -1,9 +1,9 @@
 /**
- * Custom sanitizers must implement this interface to provide custom sanitation logic.
+ * Custom sanitizers must implement this interface to provide custom sanitization logic.
  */
 export interface SanitizerInterface {
   /**
-   * Method to be called to perform given value sanitation.
+   * Method to be called to perform given value sanitization.
    */
   sanitize(value: any): any;
 }

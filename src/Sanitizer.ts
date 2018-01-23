@@ -1,38 +1,26 @@
-import { SanitationMetadata } from './metadata/SanitationMetadata';
+import { SanitizationMetadata } from './metadata/SanitizationMetadata';
 import { SanitizeTypes } from './SanitizeTypes';
 import { defaultMetadataStorage } from './metadata/MetadataStorage';
 import { SanitizerInterface } from './SanitizerInterface';
-import * as validatatorJs from 'validator';
+import * as validator from 'validator';
 
 /**
- * Sanitizer performs sanitation of the given object based on its metadata.
+ * Sanitizer performs sanitization of the given object based on its metadata.
  */
 export class Sanitizer {
-  // -------------------------------------------------------------------------
-  // Properties
-  // -------------------------------------------------------------------------
-
-  private _container: { get(type: Function): any };
+  private _container: { get(type: () => any): any };
   private metadataStorage = defaultMetadataStorage;
 
-  // -------------------------------------------------------------------------
-  // Accessors
-  // -------------------------------------------------------------------------
-
-  set container(container: { get(type: Function): any }) {
+  set container(container: { get(type: () => any): any }) {
     this._container = container;
   }
 
-  // -------------------------------------------------------------------------
-  // Annotation-based Validation Methods
-  // -------------------------------------------------------------------------
-
   /**
-   * Performs sanitation of the given object based on annotations used in given object class.
+   * Performs sanitization of the given object based on annotations used in given object class.
    */
   sanitize(object: any): void {
     this.metadataStorage
-      .getSanitizeMetadatasForObject(object.constructor)
+      .getSanitizeMetadataForObject(object.constructor)
       .filter(metadata => !!object[metadata.propertyName])
       .forEach(
         metadata =>
@@ -42,14 +30,14 @@ export class Sanitizer {
           )),
       );
 
-    // todo: implemented nested sanitation
+    // @TODO: implemented nested sanitization
   }
 
   /**
-   * Performs sanitation of the given object based on annotations used in given object class.
+   * Performs sanitization of the given object based on annotations used in given object class.
    * Performs in async-style, useful to use it in chained promises.
    */
-  sanitizeAsync<T>(object: T): Promise<T> {
+  async sanitizeAsync<T>(object: T): Promise<T> {
     return new Promise<T>(ok => {
       this.sanitize(object);
       ok(object);
@@ -57,45 +45,43 @@ export class Sanitizer {
   }
 
   // -------------------------------------------------------------------------
-  // Sanitation Methods
+  // sanitization Methods
   // -------------------------------------------------------------------------
 
   /**
    * Remove characters that appear in the blacklist. The characters are used in a RegExp and so you will need to
    * escape some chars, e.g @Blacklist('\\[\\]')
    */
-  blacklist(str: string, chars: string): string;
-  blacklist(str: string, chars: RegExp): string;
   blacklist(str: string, chars: RegExp | string): string {
-    return validatatorJs.blacklist(str, <string>chars);
+    return validator.blacklist(str, chars as string);
   }
 
   /**
    * Replace <, >, &, ', " and / with HTML entities.
    */
   escape(str: string): string {
-    return validatatorJs.escape(str);
+    return validator.escape(str);
   }
 
   /**
    * Trim characters from the left-side of the input.
    */
   ltrim(str: string, chars?: string[]): string {
-    return validatatorJs.ltrim(str, chars ? chars.join() : undefined);
+    return validator.ltrim(str, chars ? chars.join() : undefined);
   }
 
   /**
    * Canonicalize an email address.
    */
   normalizeEmail(str: string, lowercase?: boolean): string | false {
-    return validatatorJs.normalizeEmail(str, { lowercase });
+    return validator.normalizeEmail(str, { lowercase });
   }
 
   /**
    * Trim characters from the right-side of the input.
    */
   rtrim(str: string, chars?: string[]): string {
-    return validatatorJs.rtrim(str, chars ? chars.join() : undefined);
+    return validator.rtrim(str, chars ? chars.join() : undefined);
   }
 
   /**
@@ -104,7 +90,7 @@ export class Sanitizer {
    * Unicode-safe in JavaScript.
    */
   stripLow(str: string, keepNewLines?: boolean): string {
-    return validatatorJs.stripLow(str, keepNewLines);
+    return validator.stripLow(str, keepNewLines);
   }
 
   /**
@@ -113,8 +99,9 @@ export class Sanitizer {
    */
   toBoolean(input: any, isStrict?: boolean): boolean {
     if (typeof input === 'string') {
-      return validatatorJs.toBoolean(input, isStrict);
+      return validator.toBoolean(input, isStrict);
     }
+
     return !!input;
   }
 
@@ -125,7 +112,8 @@ export class Sanitizer {
     if (input instanceof Date) {
       return input;
     }
-    return validatatorJs.toDate(input);
+
+    return validator.toDate(input);
   }
 
   /**
@@ -135,7 +123,8 @@ export class Sanitizer {
     if (typeof input === 'number') {
       return input;
     }
-    return validatatorJs.toFloat(input);
+
+    return validator.toFloat(input);
   }
 
   /**
@@ -143,40 +132,39 @@ export class Sanitizer {
    */
   toInt(input: any, radix?: number): number {
     if (typeof input === 'number') {
-      return input | 0;
+      return input;
     }
-    return validatatorJs.toInt(input, radix);
+    
+    return validator.toInt(input, radix);
   }
 
   /**
    * Convert the input to a string.
    */
   toString(input: any): string {
-    return validatatorJs.toString(input);
+    return validator.toString(input);
   }
 
   /**
    * Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.
    */
   trim(str: string, chars?: string[]): string {
-    return validatatorJs.trim(str, chars ? chars.join() : undefined);
+    return validator.trim(str, chars ? chars.join() : undefined);
   }
 
   /**
    * Remove characters that do not appear in the whitelist.
    * The characters are used in a RegExp and so you will need to escape some chars, e.g. whitelist(input, '\\[\\]').
    */
-  whitelist(str: string, chars: string): string;
-  whitelist(str: string, chars: RegExp): string;
   whitelist(str: string, chars: RegExp | string): string {
-    return validatatorJs.whitelist(str, <string>chars);
+    return validator.whitelist(str, chars as string);
   }
 
   // -------------------------------------------------------------------------
   // Private Methods
   // -------------------------------------------------------------------------
 
-  private sanitizeValue(value: any, metadata: SanitationMetadata): any {
+  private sanitizeValue(value: any, metadata: SanitizationMetadata): any {
     switch (metadata.type) {
       case SanitizeTypes.BLACKLIST:
         return this.blacklist(value, metadata.value1);
@@ -208,10 +196,11 @@ export class Sanitizer {
         return this.metadataStorage
           .getSanitizeConstraintsForObject(metadata.value1)
           .map(sanitizerMetadata => {
-            if (!sanitizerMetadata.instance)
+            if (!sanitizerMetadata.instance) {
               sanitizerMetadata.instance = this.createInstance(
                 sanitizerMetadata.object,
               );
+            }
 
             return sanitizerMetadata.instance;
           })
@@ -219,14 +208,14 @@ export class Sanitizer {
 
       default:
         throw Error(
-          `Wrong sanitation type is supplied ${
+          `Wrong sanitization type is supplied ${
             metadata.type
           } for value ${value}`,
         );
     }
   }
 
-  private createInstance(object: Function): SanitizerInterface {
-    return this._container ? this._container.get(object) : new (<any>object)();
+  private createInstance(Obj: any): SanitizerInterface {
+    return this._container ? this._container.get(Obj) : new Obj();
   }
 }
