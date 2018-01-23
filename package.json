@@ -94,7 +94,7 @@
     "lint": "tslint --exclude 'node_modules' --project tsconfig.json",
     "jest": "jest",
     "check-ts": "tsc --noEmit",
-    "test": "run-p --aggregate-output -l check-ts lint jest",
+    "test": "run-p --aggregate-output check-ts lint jest",
     "dev": "jest --watch",
     "build/ts": "tsc",
     "build": "run-s clean build/ts",
