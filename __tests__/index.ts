@@ -5,7 +5,7 @@ import { SanitizerInterface } from '../src/SanitizerInterface';
 describe('Sanitizer', () => {
   beforeEach(() => {
     // Because `class-sanitizer` stores metadata of all annotated classes in a
-    // single, global object, we make sure to get a fresh copy of the 
+    // single, global object, we make sure to get a fresh copy of the
     // module for every test.
     jest.resetModules();
   });
@@ -27,11 +27,9 @@ describe('Sanitizer', () => {
 
       @Ltrim() bio: string;
 
-      @ToInt()
-      age: any;
+      @ToInt() age: any;
 
-      @ToBoolean()
-      isPremium: any;
+      @ToBoolean() isPremium: any;
     }
 
     const a = new A();
@@ -52,7 +50,43 @@ describe('Sanitizer', () => {
     expect(a.isPremium).toBe(true);
   });
 
-  test('Nested objects');
+  test('Nested objects', async () => {
+    const {
+      Trim,
+      ToDate,
+      SanitizeNested,
+      sanitize,
+    } = await import('../src/index');
+
+    class Tag {
+      @Trim() name: string;
+
+      @ToDate() createdOn: string | Date;
+    }
+
+    class Post {
+      title: string;
+
+      @SanitizeNested() tags: Tag[];
+    }
+
+    const tag1 = new Tag();
+    tag1.name = 'ja';
+
+    const tag2 = new Tag();
+    tag2.name = 'node.js ';
+    tag2.createdOn = '2010-10-10';
+
+    const post1 = new Post();
+    post1.title = 'Hello world';
+    post1.tags = [tag1, tag2];
+
+    sanitize(post1);
+
+    expect(post1.tags[1]).toBe(tag2);
+    expect(tag2.name).not.toEndWith(' ');
+    expect(tag2.createdOn).toBeInstanceOf(Date);
+  });
 
   test('Custom sanitizer', async () => {
     const { Sanitize, SanitizerConstraint } = await import('../src/index');
@@ -79,7 +113,13 @@ describe('Sanitizer', () => {
   });
 
   test('Inheritance', async () => {
-    const { sanitize, ToInt, Trim, Blacklist, Rtrim } = await import('../src/index');
+    const {
+      sanitize,
+      ToInt,
+      Trim,
+      Blacklist,
+      Rtrim,
+    } = await import('../src/index');
 
     class BasePost {
       @ToInt() rating: any;
@@ -87,12 +127,12 @@ describe('Sanitizer', () => {
 
     class Post extends BasePost {
       @Trim() title: string;
-    
+
       @Rtrim(['.'])
       @Blacklist(/(1-9)/)
       text: string;
     }
-    
+
     const post1 = new Post();
     post1.title = ' Hello world ';
     post1.text = '1. this is a great (2) post about hello 3 world.';
@@ -101,11 +141,12 @@ describe('Sanitizer', () => {
     sanitize(post1);
 
     expect(post1.title).toMatch('Hello world');
-    expect(post1.text).toStartWith('. this is a great  post about hello  world');
+    expect(post1.text).toStartWith(
+      '. this is a great  post about hello  world',
+    );
     expect(post1.text).not.toEndWith('.');
     expect(post1.rating).toBe(12);
   });
-
 
   /* Test for https://github.com/typestack/class-sanitizer/issues/8 */
   test(

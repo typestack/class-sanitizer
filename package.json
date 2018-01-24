@@ -12,6 +12,11 @@
     "Muhammad Fawwaz Orabi <mfawwaz93@gmail.com>"
   ],
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "skipBabel": true
+      }
+    },
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
@@ -53,7 +58,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test",
+      "pre-commit": "run-s lint-staged test",
       "pre-push": "yarn test",
       "post-merge": "yarnhook",
       "post-checkout": "yarnhook",

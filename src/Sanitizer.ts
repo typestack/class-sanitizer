@@ -190,6 +190,14 @@ export class Sanitizer {
         return this.trim(value, metadata.value1);
       case SanitizeTypes.WHITELIST:
         return this.whitelist(value, metadata.value1);
+      case SanitizeTypes.NESTED:
+        if (Array.isArray(value)) {
+          value.forEach(obj => {
+            this.sanitize(obj);
+          });
+        }
+
+        return value;
       case SanitizeTypes.CUSTOM_SANITIZATION:
         return this.metadataStorage
           .getSanitizeConstraintsForObject(metadata.value1)
