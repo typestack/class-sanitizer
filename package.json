@@ -1,8 +1,8 @@
 {
-  "name": "@forabi/class-sanitizer",
+  "name": "@hollowverse/class-sanitizer",
   "private": true,
   "version": "0.1.0",
-  "description": "Class-based sanitization in Typescript using decorators",
+  "description": "Class-based sanitization in TypeScript using decorators",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "author": {
@@ -28,10 +28,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pleerock/class-sanitizer.git"
+    "url": "https://github.com/hollowverse/class-sanitizer.git"
   },
   "bugs": {
-    "url": "https://github.com/pleerock/class-sanitizer/issues"
+    "url": "https://github.com/hollowverse/class-sanitizer/issues"
   },
   "tags": [
     "sanitizer",
