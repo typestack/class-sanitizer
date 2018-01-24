@@ -1,44 +1,13 @@
 {
   "extends": [
-    "tslint:latest",
-    "tslint-microsoft-contrib",
-    "tslint-config-prettier"
+    "./node_modules/@hollowverse/common/tslint.json"
   ],
   "rules": {
-    "max-line-length": [true, 120],
     "object-literal-sort-keys": false,
-    "no-unsafe-any": false,
-    "strict-boolean-expressions": false,
-    "missing-jsdoc": false,
-    "trailing-comma": [true],
-    "typedef": [true, "property-declaration"],
-    "variable-name": [false],
-    "quotemark": [true, "single", "jsx-double"],
-    "interface-name": [true, "never-prefix"],
-    "member-access": false,
-    "ordered-imports": [false],
-    "no-relative-imports": false,
-    "semicolon": [true, "ignore-bound-class-methods"],
 
-    // tslint-microsoft-contrib
-    "import-name": false,
-    "export-name": false,
     "mocha-no-side-effect-code": false,
     "no-import-side-effect": false,
     "completed-docs": false,
-    "misnamed-import": false,
-    "restrict-plus-operand": false,
-    "no-single-line-block-comment": false,
-    "react-unused-props-and-state": false,
-    "react-tsx-curly-spacing": false,
-
-    "no-any": false,
-
-    "prefer-type-cast": false,
-    "no-reserved-keywords": false,
-
-    // Resolve conflicting rules for array types
-    "array-type": [true, "array-simple"],
-    "prefer-array-literal": [false]
+    "misnamed-import": false
   }
 }

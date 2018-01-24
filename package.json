@@ -51,27 +51,23 @@
       "prettier --write",
       "git add"
     ],
-    "**/*.ts{x,}": [
+    "**/*.{j,t}s{x,}": [
       "prettier --write",
       "git add"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-s lint-staged test",
+      "pre-commit": "run-s lint-staged validate-filenames",
       "pre-push": "yarn test",
       "post-merge": "yarnhook",
       "post-checkout": "yarnhook",
       "post-rewrite": "yarnhook"
     }
   },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "semi": true,
-    "tabWidth": 2
-  },
   "devDependencies": {
+    "@hollowverse/common": "hollowverse/common",
+    "@hollowverse/validate-filenames": "^1.3.4",
     "@types/jest": "^22.0.1",
     "@types/node": "^7.0.5",
     "@types/validator": "^6.3.0",
@@ -90,18 +86,34 @@
     "tslint-microsoft-contrib": "^5.0.2",
     "tslint-stylish": "^2.1.0-beta",
     "typescript": "^2.6.2",
-    "yarnhook": "^0.1.1"
+    "yarnhook": "^0.1.1",
+    "babel-eslint": "^8.0.2",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.3.0",
+    "lodash": "^4.17.4",
+    "nodemon": "^1.11.0",
+    "shelljs": "^0.7.8",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0",
+    "stylelint-no-unsupported-browser-features": "^1.0.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "tslint-react": "^3.2.0"
   },
   "scripts": {
     "clean": "del-cli build",
     "pretest": "run-p clean",
-    "lint": "tslint --exclude 'node_modules' --project tsconfig.json",
+    "lint-ts": "tslint --exclude 'node_modules' --project tsconfig.json",
     "jest": "jest",
     "check-ts": "tsc --noEmit",
-    "test": "run-p --aggregate-output check-ts lint jest",
+    "test": "run-p --aggregate-output check-ts lint-ts jest",
     "dev": "jest --watch",
-    "build/ts": "tsc --project src",
-    "build": "run-s clean build/ts",
-    "lint-staged": "lint-staged"
+    "build-ts": "tsc --project src",
+    "build": "run-s clean build-ts",
+    "lint-staged": "lint-staged",
+    "validate-filenames": "validate-filenames --config commonconfig.js"
   }
 }

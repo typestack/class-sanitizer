@@ -1,20 +1,14 @@
 {
+  "extends": "./node_modules/@hollowverse/common/tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "target": "es2015",
     "module": "commonjs",
+    "allowJs": false,
+    "checkJs": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "noImplicitAny": true,
     "declaration": true
   },
   "exclude": [
