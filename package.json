@@ -1,6 +1,5 @@
 {
   "name": "@hollowverse/class-sanitizer",
-  "private": true,
   "version": "0.1.0",
   "description": "Class-based sanitization in TypeScript using decorators",
   "license": "Apache-2.0",
@@ -96,7 +95,7 @@
     "check-ts": "tsc --noEmit",
     "test": "run-p --aggregate-output check-ts lint jest",
     "dev": "jest --watch",
-    "build/ts": "tsc",
+    "build/ts": "tsc --project src",
     "build": "run-s clean build/ts",
     "lint-staged": "lint-staged"
   }

@@ -1,7 +1,5 @@
 {
-  "version": "1.8.0",
   "compilerOptions": {
-    "outDir": "build",
     "strict": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
