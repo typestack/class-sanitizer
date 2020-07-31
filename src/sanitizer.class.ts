@@ -120,7 +120,7 @@ export class Sanitizer {
   public sanitize<T = Record<string, any>>(classInstance: InstanceType<any>): T {
     this.metadataStorage
       .getSanitizeMetadatasForClassInstance(classInstance)
-      .filter(metadata => !!classInstance[metadata.propertyName])
+      .filter(mt => classInstance[mt.propertyName] !== undefined && classInstance[mt.propertyName] !== null)
       .forEach(metadata => {
         /** If `each` is set we validate the values of the array.  */
         if (metadata.each) {

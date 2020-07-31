@@ -1,5 +1,5 @@
 import { defaultMetadataStorage } from '../src/default-storage.const';
-import { Trim, Ltrim, Rtrim, SanitizeNested } from '../src/decorators';
+import { Trim, Ltrim, Rtrim, ToInt, SanitizeNested } from '../src/decorators';
 import { sanitize, Sanitizer, sanitizeAsync } from '../src';
 
 describe('Basic Functionality', () => {
@@ -108,5 +108,29 @@ describe('Basic Functionality', () => {
     const result = await sanitizeAsync(input);
 
     expect(result).toEqual(input);
+  });
+
+  it(`should skip null and undefined properties but not ''`, () => {
+    class TestClass {
+      @ToInt()
+      emptyStringValue: string;
+
+      @ToInt()
+      undefinedValue: string;
+
+      @ToInt()
+      nullValue: string;
+    }
+
+    const instance = new TestClass();
+    instance.emptyStringValue = '';
+    instance.undefinedValue = undefined;
+    instance.nullValue = null;
+
+    sanitize(instance);
+
+    expect(instance.emptyStringValue).toBeNaN();
+    expect(instance.undefinedValue).toBeUndefined();
+    expect(instance.nullValue).toBeNull();
   });
 });
