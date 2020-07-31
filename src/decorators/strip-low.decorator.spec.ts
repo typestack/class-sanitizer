@@ -9,16 +9,27 @@ describe('StripLow', () => {
     class TestClass {
       @StripLow()
       text: string;
-
-      constructor(text: string) {
-        this.text = text;
-      }
     }
 
-    const instance = new TestClass('abc0189?<>=ABC[]`');
+    const instance = new TestClass();
+    instance.text = 'abc0189?<>=ABC[]`';
 
     sanitize(instance);
 
     expect(instance.text).toBe('abc0189?<>=ABC[]`');
+  });
+
+  it('should not strip text above 32 numerical value in array property with "each: true"', () => {
+    class TestClass {
+      @StripLow(undefined, { each: true })
+      text: string[];
+    }
+
+    const instance = new TestClass();
+    instance.text = ['abc0189?<>=ABC[]`'];
+
+    sanitize(instance);
+
+    expect(instance.text[0]).toBe('abc0189?<>=ABC[]`');
   });
 });

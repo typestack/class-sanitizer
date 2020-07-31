@@ -63,4 +63,18 @@ describe('ToFloat', () => {
 
     expect(instance.propA).toBeNaN();
   });
+
+  it('should convert received string numbers to number in array property with "each: true"', () => {
+    class TestClass {
+      @ToFloat({ each: true })
+      propA: string[];
+    }
+    const instance = new TestClass();
+    instance.propA = ['1', '3.14'];
+
+    sanitize(instance);
+
+    expect(instance.propA[0]).toEqual(1);
+    expect(instance.propA[1]).toEqual(3.14);
+  });
 });

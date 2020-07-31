@@ -5,7 +5,7 @@ import { sanitize } from '..';
 describe('ToBoolean', () => {
   beforeEach(() => defaultMetadataStorage.reset());
 
-  it('convert string "true" and "1" value to Boolean true ', () => {
+  it('convert string "true" and "1" value to Boolean true', () => {
     class TestClass {
       @ToBoolean()
       propA: string;
@@ -80,5 +80,19 @@ describe('ToBoolean', () => {
 
     expect(instance.propA).toBe(true);
     expect(instance.propB).toBe(false);
+  });
+
+  it('convert string "true" and "1" value to Boolean true in array property with "each: true"', () => {
+    class TestClass {
+      @ToBoolean(undefined, { each: true })
+      propA: string[];
+    }
+    const instance = new TestClass();
+    instance.propA = ['true', 'false'];
+
+    sanitize(instance);
+
+    expect(instance.propA[0]).toBe(true);
+    expect(instance.propA[1]).toBe(false);
   });
 });

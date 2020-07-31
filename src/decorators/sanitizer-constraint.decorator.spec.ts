@@ -27,4 +27,25 @@ describe('SanitizerConstraint', () => {
 
     expect(instance.text).toBe('replaced');
   });
+
+  it('should execute custom decorators in array property with "each: true"', () => {
+    @SanitizerConstraint()
+    class CustomSanitizerImpl implements CustomSanitizer {
+      sanitize(value: string): string {
+        return 'replaced';
+      }
+    }
+
+    class TestClass {
+      @Sanitize(CustomSanitizerImpl, { each: true })
+      text: string[];
+    }
+
+    const instance = new TestClass();
+    instance.text = ['original'];
+
+    sanitize(instance);
+
+    expect(instance.text[0]).toBe('replaced');
+  });
 });

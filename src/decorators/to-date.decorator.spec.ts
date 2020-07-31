@@ -31,4 +31,18 @@ describe('ToDate', () => {
 
     expect(instance.propA).toBe(null);
   });
+
+  it('should convert received date-strings to Date in array property with "each: true"', () => {
+    class TestClass {
+      @ToDate({ each: true })
+      propA: string[];
+    }
+    const instance = new TestClass();
+    instance.propA = ['2000-12-24T19:00:00.000Z'];
+
+    sanitize(instance);
+
+    expect(instance.propA[0]).toBeInstanceOf(Date);
+    expect(((instance.propA[0] as any) as Date).toISOString()).toBe('2000-12-24T19:00:00.000Z');
+  });
 });
