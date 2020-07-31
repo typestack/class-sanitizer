@@ -1,3 +1,5 @@
+import { SanitizeTypes } from '../../enums';
+
 /**
  * This metadata interface contains information for sanitation.
  */
@@ -5,7 +7,7 @@ export interface SanitationMetadata {
   /**
    * Sanitation type.
    */
-  type: number;
+  type: SanitizeTypes;
 
   /**
    * Object that is used to be sanitized.

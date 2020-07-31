@@ -1,20 +1,20 @@
 /**
  * Sanitation types.
  */
-export enum SanitizeTypes {
-  BLACKLIST = 1,
-  ESCAPE = 2,
-  LTRIM = 3,
-  NORMALIZE_EMAIL = 4,
-  RTRIM = 5,
-  STRIP_LOW = 6,
-  TO_BOOLEAN = 7,
-  TO_DATE = 8,
-  TO_FLOAT = 9,
-  TO_INT = 10,
-  TO_STRING = 11,
-  TRIM = 12,
-  WHITELIST = 13,
-  CUSTOM_SANITIZATION = 9999,
-  NESTED = 1000,
+export const enum SanitizeTypes {
+  BLACKLIST = 'BLACKLIST',
+  ESCAPE = 'ESCAPE',
+  LTRIM = 'LTRIM',
+  NORMALIZE_EMAIL = 'NORMALIZE_EMAIL',
+  RTRIM = 'RTRIM',
+  STRIP_LOW = 'STRIP_LOW',
+  TO_BOOLEAN = 'TO_BOOLEAN',
+  TO_DATE = 'TO_DATE',
+  TO_FLOAT = 'TO_FLOAT',
+  TO_INT = 'TO_INT',
+  TO_STRING = 'TO_STRING',
+  TRIM = 'TRIM',
+  WHITELIST = 'WHITELIST',
+  CUSTOM_SANITIZATION = 'CUSTOM_SANITIZATION',
+  NESTED = 'NESTED',
 }
