@@ -129,14 +129,19 @@ export class Sanitizer {
           }
 
           (classInstance[metadata.propertyName] as any[]).forEach((value, index) => {
-            classInstance[metadata.propertyName][index] = this.sanitizeValue(value, metadata);
+            classInstance[metadata.propertyName][index] =
+              metadata.type === SanitizeTypes.NESTED
+                ? this.sanitize(classInstance[metadata.propertyName][index])
+                : this.sanitizeValue(value, metadata);
           });
         } else {
-          classInstance[metadata.propertyName] = this.sanitizeValue(classInstance[metadata.propertyName], metadata);
+          classInstance[metadata.propertyName] =
+            metadata.type === SanitizeTypes.NESTED
+              ? this.sanitize(classInstance[metadata.propertyName])
+              : this.sanitizeValue(classInstance[metadata.propertyName], metadata);
         }
       });
 
-    // todo: implemented nested sanitation
     return classInstance as T;
   }
 

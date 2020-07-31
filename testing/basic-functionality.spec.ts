@@ -60,8 +60,7 @@ describe('Basic Functionality', () => {
     expect(instance.texts[1]).toBe('textB');
   });
 
-  // Note: This is not implemented.
-  it.skip('can validate nested values in arrays', () => {
+  it('can validate nested values in arrays', () => {
     class InnerTestClass {
       @Trim()
       text: string;
