@@ -29,22 +29,22 @@ export class Sanitizer {
   /**
    * Performs sanitation of the given object based on annotations used in given object class.
    */
-  sanitize(object: Record<string, any>): void {
+  sanitize(classInstance: Record<string, any>): void {
     this.metadataStorage
-      .getSanitizeMetadatasForObject(object.constructor)
-      .filter(metadata => !!object[metadata.propertyName])
+      .getSanitizeMetadatasForClassInstance(classInstance)
+      .filter(metadata => !!classInstance[metadata.propertyName])
       .forEach(metadata => {
         /** If `each` is set we validate the values of the array.  */
         if (metadata.each) {
-          if (!Array.isArray(object[metadata.propertyName])) {
+          if (!Array.isArray(classInstance[metadata.propertyName])) {
             throw new Error(`Received a non-array value when expected array ('each' was set to true).`);
           }
 
-          (object[metadata.propertyName] as any[]).forEach((value, index) => {
-            object[metadata.propertyName][index] = this.sanitizeValue(value, metadata);
+          (classInstance[metadata.propertyName] as any[]).forEach((value, index) => {
+            classInstance[metadata.propertyName][index] = this.sanitizeValue(value, metadata);
           });
         } else {
-          object[metadata.propertyName] = this.sanitizeValue(object[metadata.propertyName], metadata);
+          classInstance[metadata.propertyName] = this.sanitizeValue(classInstance[metadata.propertyName], metadata);
         }
       });
 
@@ -55,11 +55,10 @@ export class Sanitizer {
    * Performs sanitation of the given object based on annotations used in given object class.
    * Performs in async-style, useful to use it in chained promises.
    */
-  sanitizeAsync<T>(object: T): Promise<T> {
-    return new Promise<T>(ok => {
-      this.sanitize(object);
-      ok(object);
-    });
+  public async sanitizeAsync<T>(classInstance: T): Promise<T> {
+    await this.sanitize(classInstance);
+
+    return classInstance;
   }
 
   // -------------------------------------------------------------------------
@@ -209,7 +208,7 @@ export class Sanitizer {
         return this.whitelist(value, metadata.value1);
       case SanitizeTypes.CUSTOM_SANITIZATION:
         return this.metadataStorage
-          .getSanitizeConstraintsForObject(metadata.value1)
+          .getSanitizeConstraintsForClassConstructor(metadata.value1)
           .map(sanitizerMetadata => {
             if (!sanitizerMetadata.instance) sanitizerMetadata.instance = this.createInstance(sanitizerMetadata.target);
 

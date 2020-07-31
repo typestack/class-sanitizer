@@ -7,12 +7,15 @@ import { SanitizeTypes } from '../../enums';
  */
 export function NormalizeEmail(lowercase?: boolean, annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.NORMALIZE_EMAIL,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: lowercase,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.NORMALIZE_EMAIL,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: lowercase,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

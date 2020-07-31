@@ -8,12 +8,15 @@ import { SanitizeTypes } from '../../enums';
  */
 export function ToBoolean(isStrict?: boolean, annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.TO_BOOLEAN,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: isStrict,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.TO_BOOLEAN,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: isStrict,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

@@ -7,11 +7,14 @@ import { SanitizeTypes } from '../../enums';
  */
 export function Escape(annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.ESCAPE,
-      target: target as Function,
-      propertyName: propertyName,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.ESCAPE,
+        target: target as Function,
+        propertyName: propertyName,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

@@ -9,12 +9,15 @@ import { SanitizeTypes } from '../../enums';
  */
 export function StripLow(keepNewLines?: boolean, annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.STRIP_LOW,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: keepNewLines,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.STRIP_LOW,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: keepNewLines,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

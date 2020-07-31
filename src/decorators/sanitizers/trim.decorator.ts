@@ -7,12 +7,15 @@ import { SanitizeTypes } from '../../enums';
  */
 export function Trim(chars?: string[], annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.TRIM,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: chars,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.TRIM,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: chars,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

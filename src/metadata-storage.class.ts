@@ -4,77 +4,61 @@ import { SanitationMetadata, ConstraintMetadata } from './interfaces';
  * Storage all metadatas of this library.
  */
 export class MetadataStorage {
-  // -------------------------------------------------------------------------
-  // Properties
-  // -------------------------------------------------------------------------
-
-  private _sanitationMetadata: SanitationMetadata[] = [];
-  private _constraintMetadatas: ConstraintMetadata[] = [];
-
-  // -------------------------------------------------------------------------
-  // Getter Methods
-  // -------------------------------------------------------------------------
+  private sanitationMetadataStore: Map<Function, SanitationMetadata[]> = new Map();
+  private constraintMetadatasStore: Map<Function, ConstraintMetadata[]> = new Map();
 
   /**
-   * Gets all sanitation metadatas saved in this storage.
+   * Inserts the metadata to the correct place in our internal store. If there
+   * is no metadata for the given target it create an empty sub-store first.
+   * @param metadata
+   * @param type
    */
-  get sanitationMetadata(): SanitationMetadata[] {
-    return this._sanitationMetadata;
+  public addMetadata(metadata: SanitationMetadata, type: 'sanitation'): void;
+  public addMetadata(metadata: ConstraintMetadata, type: 'constraint'): void;
+  public addMetadata(metadata: SanitationMetadata | ConstraintMetadata, type: 'sanitation' | 'constraint'): void {
+    if (!this.sanitationMetadataStore.has(metadata.target)) {
+      this.sanitationMetadataStore.set(metadata.target, []);
+    }
+
+    if (!this.constraintMetadatasStore.has(metadata.target)) {
+      this.constraintMetadatasStore.set(metadata.target, []);
+    }
+
+    switch (type) {
+      case 'sanitation':
+        this.sanitationMetadataStore.get(metadata.target)!.push(metadata as SanitationMetadata);
+        break;
+      case 'constraint':
+        this.constraintMetadatasStore.get(metadata.target)!.push(metadata as ConstraintMetadata);
+        break;
+    }
   }
-
-  /**
-   * Gets all constraint metadatas saved in this storage.
-   */
-  get constraintMetadatas(): ConstraintMetadata[] {
-    return this._constraintMetadatas;
-  }
-
-  // -------------------------------------------------------------------------
-  // Adder Methods
-  // -------------------------------------------------------------------------
-
-  /**
-   * Adds a new sanitation metadata.
-   */
-  addSanitationMetadata(metadata: SanitationMetadata) {
-    this.sanitationMetadata.push(metadata);
-  }
-
-  /**
-   * Adds a new constraint metadata.
-   */
-  addConstraintMetadata(metadata: ConstraintMetadata) {
-    this.constraintMetadatas.push(metadata);
-  }
-
-  // -------------------------------------------------------------------------
-  // Public Methods
-  // -------------------------------------------------------------------------
 
   /**
    * Gets all sanitation metadatas for the given targetConstructor with the given groups.
+   *
+   * @param instanceConstructor the constructor of the initiated class
    */
-  getSanitizeMetadatasForObject(target: Function): SanitationMetadata[] {
-    return this.sanitationMetadata.filter(function (metadata) {
-      if (metadata.target === target) return false;
-      if (metadata.target instanceof Function && !(target.prototype instanceof metadata.target)) return false;
+  getSanitizeMetadatasForClassInstance(classInstance: Object): SanitationMetadata[] {
+    const targetSanitationMetadata = this.sanitationMetadataStore.get((classInstance as any)['__proto__']) || [];
+    const parentSanitationMetadata =
+      this.sanitationMetadataStore.get((classInstance as any)['__proto__']['__proto__']) || [];
 
-      return true;
-    });
+    return [...targetSanitationMetadata, ...parentSanitationMetadata];
   }
 
   /**
    * Gets all sanitizator constraints for the given object.
    */
-  getSanitizeConstraintsForObject(target: Function): ConstraintMetadata[] {
-    return this.constraintMetadatas.filter(metadata => metadata.target === target);
+  getSanitizeConstraintsForClassConstructor(target: Function): ConstraintMetadata[] {
+    return this.constraintMetadatasStore.get(target) || [];
   }
 
   /**
-   * Restes the metadata storage.
+   * Removes all the currently saved metadata about the classes.
    */
   public reset() {
-    this._constraintMetadatas = [];
-    this._sanitationMetadata = [];
+    this.sanitationMetadataStore = new Map();
+    this.constraintMetadatasStore = new Map();
   }
 }

@@ -7,12 +7,15 @@ import { SanitizeTypes } from '../../enums';
  */
 export function ToInt(radix?: number, annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.TO_INT,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: radix,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.TO_INT,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: radix,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

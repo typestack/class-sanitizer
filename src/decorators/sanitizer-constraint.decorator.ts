@@ -5,8 +5,11 @@ import { defaultMetadataStorage } from '../default-storage.const';
  */
 export function SanitizerConstraint() {
   return function (target: Function) {
-    defaultMetadataStorage.addConstraintMetadata({
-      target: target,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        target: target,
+      },
+      'constraint'
+    );
   };
 }

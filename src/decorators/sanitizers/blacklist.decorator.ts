@@ -8,12 +8,15 @@ import { SanitizeTypes } from '../../enums';
  */
 export function Blacklist(chars: RegExp, annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.BLACKLIST,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: chars,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.BLACKLIST,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: chars,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

@@ -7,11 +7,14 @@ import { SanitizeTypes } from '../../enums';
  */
 export function ToDate(annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.TO_DATE,
-      target: target as Function,
-      propertyName: propertyName,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.TO_DATE,
+        target: target as Function,
+        propertyName: propertyName,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }

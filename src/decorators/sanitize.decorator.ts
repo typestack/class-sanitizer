@@ -7,12 +7,15 @@ import { SanitizeTypes } from '../enums';
  */
 export function Sanitize(constraintClass: Function, annotationOptions: SanitationOptions = {}) {
   return function (target: Object, propertyName: string) {
-    defaultMetadataStorage.addSanitationMetadata({
-      type: SanitizeTypes.CUSTOM_SANITIZATION,
-      target: target as Function,
-      propertyName: propertyName,
-      value1: constraintClass,
-      each: annotationOptions.each,
-    });
+    defaultMetadataStorage.addMetadata(
+      {
+        type: SanitizeTypes.CUSTOM_SANITIZATION,
+        target: target as Function,
+        propertyName: propertyName,
+        value1: constraintClass,
+        each: annotationOptions.each,
+      },
+      'sanitation'
+    );
   };
 }
