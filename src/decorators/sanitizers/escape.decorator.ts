@@ -5,13 +5,13 @@ import { SanitizeTypes } from '../../enums';
 /**
  * Replace <, >, &, ', " and / with HTML entities.
  */
-export function Escape(annotationOptions?: SanitationOptions) {
-  return function (object: Object, propertyName: string) {
+export function Escape(annotationOptions: SanitationOptions = {}) {
+  return function (target: Object, propertyName: string) {
     defaultMetadataStorage.addSanitationMetadata({
       type: SanitizeTypes.ESCAPE,
-      object: object,
+      target: target as Function,
       propertyName: propertyName,
-      each: annotationOptions && annotationOptions.each ? annotationOptions.each : undefined,
+      each: annotationOptions.each,
     });
   };
 }

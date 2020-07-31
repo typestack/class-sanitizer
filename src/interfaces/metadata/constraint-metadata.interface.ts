@@ -7,7 +7,7 @@ export interface ConstraintMetadata {
   /**
    * Object class which performs sanitation.
    */
-  object: Function;
+  target: Function;
 
   /**
    * Instance of the object which performs sanitation.

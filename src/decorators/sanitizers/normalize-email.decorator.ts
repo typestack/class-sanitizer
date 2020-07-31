@@ -5,14 +5,14 @@ import { SanitizeTypes } from '../../enums';
 /**
  * Normalizes the received email address.
  */
-export function NormalizeEmail(lowercase?: boolean, annotationOptions?: SanitationOptions) {
-  return function (object: Object, propertyName: string) {
+export function NormalizeEmail(lowercase?: boolean, annotationOptions: SanitationOptions = {}) {
+  return function (target: Object, propertyName: string) {
     defaultMetadataStorage.addSanitationMetadata({
       type: SanitizeTypes.NORMALIZE_EMAIL,
-      object: object,
+      target: target as Function,
       propertyName: propertyName,
       value1: lowercase,
-      each: annotationOptions && annotationOptions.each ? annotationOptions.each : undefined,
+      each: annotationOptions.each,
     });
   };
 }

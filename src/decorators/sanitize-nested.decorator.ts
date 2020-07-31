@@ -5,13 +5,13 @@ import { SanitizeTypes } from '../enums';
 /**
  * Indicates if nested object should be sanitized as well.
  */
-export function SanitizeNested(annotationOptions?: SanitationOptions) {
-  return function (object: Object, propertyName: string) {
+export function SanitizeNested(annotationOptions: SanitationOptions = {}) {
+  return function (target: Object, propertyName: string) {
     defaultMetadataStorage.addSanitationMetadata({
       type: SanitizeTypes.NESTED,
-      object: object,
+      target: target,
       propertyName: propertyName,
-      each: annotationOptions && annotationOptions.each ? annotationOptions.each : undefined,
+      each: annotationOptions.each,
     });
   };
 }

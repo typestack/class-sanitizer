@@ -5,13 +5,13 @@ import { SanitizeTypes } from '../../enums';
 /**
  * Convert the input to a float.
  */
-export function ToFloat(annotationOptions?: SanitationOptions) {
-  return function (object: Object, propertyName: string) {
+export function ToFloat(annotationOptions: SanitationOptions = {}) {
+  return function (target: Object, propertyName: string) {
     defaultMetadataStorage.addSanitationMetadata({
       type: SanitizeTypes.TO_FLOAT,
-      object: object,
+      target: target as Function,
       propertyName: propertyName,
-      each: annotationOptions && annotationOptions.each ? annotationOptions.each : undefined,
+      each: annotationOptions.each,
     });
   };
 }

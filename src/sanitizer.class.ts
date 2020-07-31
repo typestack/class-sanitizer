@@ -211,7 +211,7 @@ export class Sanitizer {
         return this.metadataStorage
           .getSanitizeConstraintsForObject(metadata.value1)
           .map(sanitizerMetadata => {
-            if (!sanitizerMetadata.instance) sanitizerMetadata.instance = this.createInstance(sanitizerMetadata.object);
+            if (!sanitizerMetadata.instance) sanitizerMetadata.instance = this.createInstance(sanitizerMetadata.target);
 
             return sanitizerMetadata.instance;
           })

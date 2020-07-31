@@ -10,7 +10,7 @@ export interface SanitationMetadata {
   /**
    * Object that is used to be sanitized.
    */
-  object: Object;
+  target: Object;
 
   /**
    * Property of the object to be sanitized.

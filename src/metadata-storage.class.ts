@@ -54,11 +54,10 @@ export class MetadataStorage {
   /**
    * Gets all sanitation metadatas for the given targetConstructor with the given groups.
    */
-  getSanitizeMetadatasForObject(targetConstructor: Function): SanitationMetadata[] {
+  getSanitizeMetadatasForObject(target: Function): SanitationMetadata[] {
     return this.sanitationMetadata.filter(function (metadata) {
-      if (metadata.object === targetConstructor) return false;
-      if (metadata.object instanceof Function && !(targetConstructor.prototype instanceof metadata.object))
-        return false;
+      if (metadata.target === target) return false;
+      if (metadata.target instanceof Function && !(target.prototype instanceof metadata.target)) return false;
 
       return true;
     });
@@ -67,8 +66,8 @@ export class MetadataStorage {
   /**
    * Gets all sanitizator constraints for the given object.
    */
-  getSanitizeConstraintsForObject(object: Function): ConstraintMetadata[] {
-    return this.constraintMetadatas.filter(metadata => metadata.object === object);
+  getSanitizeConstraintsForObject(target: Function): ConstraintMetadata[] {
+    return this.constraintMetadatas.filter(metadata => metadata.target === target);
   }
 
   /**
