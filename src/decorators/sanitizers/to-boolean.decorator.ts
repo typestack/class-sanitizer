@@ -6,8 +6,8 @@ import { SanitizeTypes } from '../../enums';
  * Convert the input to a boolean.
  * Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
  */
-export function ToBoolean(isStrict?: boolean, annotationOptions: SanitationOptions = {}) {
-  return function (target: Object, propertyName: string) {
+export function ToBoolean(isStrict?: boolean, annotationOptions: SanitationOptions = {}): PropertyDecorator {
+  return function (target: Object, propertyName: string | symbol) {
     defaultMetadataStorage.addMetadata(
       {
         type: SanitizeTypes.TO_BOOLEAN,

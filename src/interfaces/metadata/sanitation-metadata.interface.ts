@@ -15,7 +15,7 @@ export interface SanitationMetadata {
   /**
    * Property of the object to be sanitized.
    */
-  propertyName: string;
+  propertyName: string | symbol;
 
   /**
    * First extra sanitized metadata value.

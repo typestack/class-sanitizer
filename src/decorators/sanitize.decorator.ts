@@ -5,8 +5,8 @@ import { SanitizeTypes } from '../enums';
 /**
  * Performs sanitation based on the given custom constraint.
  */
-export function Sanitize(constraintClass: Function, annotationOptions: SanitationOptions = {}) {
-  return function (target: Object, propertyName: string) {
+export function Sanitize(constraintClass: Function, annotationOptions: SanitationOptions = {}): PropertyDecorator {
+  return function (target: Object, propertyName: string | symbol) {
     defaultMetadataStorage.addMetadata(
       {
         type: SanitizeTypes.CUSTOM_SANITIZATION,

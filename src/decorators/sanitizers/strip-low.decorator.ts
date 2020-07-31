@@ -7,8 +7,8 @@ import { SanitizeTypes } from '../../enums';
  * If keepNewLines is true, newline characters are preserved (\n and \r, hex 0xA and 0xD).
  * Unicode-safe in JavaScript.
  */
-export function StripLow(keepNewLines?: boolean, annotationOptions: SanitationOptions = {}) {
-  return function (target: Object, propertyName: string) {
+export function StripLow(keepNewLines?: boolean, annotationOptions: SanitationOptions = {}): PropertyDecorator {
+  return function (target: Object, propertyName: string | symbol) {
     defaultMetadataStorage.addMetadata(
       {
         type: SanitizeTypes.STRIP_LOW,

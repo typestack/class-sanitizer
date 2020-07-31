@@ -5,8 +5,8 @@ import { SanitizeTypes } from '../../enums';
 /**
  * Trim characters from the left-side of the input.
  */
-export function Ltrim(chars?: string[], annotationOptions: SanitationOptions = {}) {
-  return function (target: Object, propertyName: string) {
+export function Ltrim(chars?: string[], annotationOptions: SanitationOptions = {}): PropertyDecorator {
+  return function (target: Object, propertyName: string | symbol) {
     defaultMetadataStorage.addMetadata(
       {
         type: SanitizeTypes.LTRIM,

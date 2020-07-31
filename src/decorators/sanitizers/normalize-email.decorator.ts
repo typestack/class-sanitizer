@@ -5,8 +5,8 @@ import { SanitizeTypes } from '../../enums';
 /**
  * Normalizes the received email address.
  */
-export function NormalizeEmail(lowercase?: boolean, annotationOptions: SanitationOptions = {}) {
-  return function (target: Object, propertyName: string) {
+export function NormalizeEmail(lowercase?: boolean, annotationOptions: SanitationOptions = {}): PropertyDecorator {
+  return function (target: Object, propertyName: string | symbol) {
     defaultMetadataStorage.addMetadata(
       {
         type: SanitizeTypes.NORMALIZE_EMAIL,

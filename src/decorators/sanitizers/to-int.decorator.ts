@@ -5,8 +5,8 @@ import { SanitizeTypes } from '../../enums';
 /**
  * Convert the input to an integer, or NaN if the input is not an integer.
  */
-export function ToInt(radix?: number, annotationOptions: SanitationOptions = {}) {
-  return function (target: Object, propertyName: string) {
+export function ToInt(radix?: number, annotationOptions: SanitationOptions = {}): PropertyDecorator {
+  return function (target: Object, propertyName: string | symbol) {
     defaultMetadataStorage.addMetadata(
       {
         type: SanitizeTypes.TO_INT,
