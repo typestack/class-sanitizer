@@ -1,4 +1,4 @@
-import { SanitationMetadata, ConstraintMetadata } from '../interfaces';
+import { SanitationMetadata, ConstraintMetadata } from './interfaces';
 
 /**
  * Storage all metadatas of this library.
@@ -71,8 +71,3 @@ export class MetadataStorage {
     return this.constraintMetadatas.filter(metadata => metadata.object === object);
   }
 }
-
-/**
- * Default metadata storage used as singleton and can be used to storage all metadatas in the system.
- */
-export const defaultMetadataStorage = new MetadataStorage();

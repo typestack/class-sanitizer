@@ -1,5 +1,5 @@
 import { SanitizeTypes } from './enums';
-import { defaultMetadataStorage } from './metadata/MetadataStorage';
+import { defaultMetadataStorage } from './default-storage.const';
 import { SanitizerInterface, SanitationMetadata } from './interfaces';
 import validator from 'validator';
 

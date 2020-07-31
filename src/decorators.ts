@@ -1,4 +1,4 @@
-import { defaultMetadataStorage } from './metadata/MetadataStorage';
+import { defaultMetadataStorage } from './default-storage.const';
 import { SanitizeTypes } from './enums';
 import { SanitationOptions } from './interfaces';
 
