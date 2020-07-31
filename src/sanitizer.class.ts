@@ -29,13 +29,24 @@ export class Sanitizer {
   /**
    * Performs sanitation of the given object based on annotations used in given object class.
    */
-  sanitize(object: any): void {
+  sanitize(object: Record<string, any>): void {
     this.metadataStorage
       .getSanitizeMetadatasForObject(object.constructor)
       .filter(metadata => !!object[metadata.propertyName])
-      .forEach(
-        metadata => (object[metadata.propertyName] = this.sanitizeValue(object[metadata.propertyName], metadata))
-      );
+      .forEach(metadata => {
+        /** If `each` is set we validate the values of the array.  */
+        if (metadata.each) {
+          if (!Array.isArray(object[metadata.propertyName])) {
+            throw new Error(`Received a non-array value when expected array ('each' was set to true).`);
+          }
+
+          (object[metadata.propertyName] as any[]).forEach((value, index) => {
+            object[metadata.propertyName][index] = this.sanitizeValue(value, metadata);
+          });
+        } else {
+          object[metadata.propertyName] = this.sanitizeValue(object[metadata.propertyName], metadata);
+        }
+      });
 
     // todo: implemented nested sanitation
   }
