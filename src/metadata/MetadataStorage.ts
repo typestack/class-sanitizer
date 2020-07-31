@@ -1,5 +1,4 @@
-import { SanitationMetadata } from './SanitationMetadata';
-import { ConstraintMetadata } from './ConstraintMetadata';
+import { SanitationMetadata, ConstraintMetadata } from '../interfaces';
 
 /**
  * Storage all metadatas of this library.

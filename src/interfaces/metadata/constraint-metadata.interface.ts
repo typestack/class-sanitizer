@@ -1,4 +1,4 @@
-import { SanitizerInterface } from '../SanitizerInterface';
+import { SanitizerInterface } from '../sanitizer.interface';
 
 /**
  * This metadata interface contains information for custom sanitizers.

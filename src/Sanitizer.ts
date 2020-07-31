@@ -1,7 +1,6 @@
-import { SanitationMetadata } from './metadata/SanitationMetadata';
 import { SanitizeTypes } from './SanitizeTypes';
 import { defaultMetadataStorage } from './metadata/MetadataStorage';
-import { SanitizerInterface } from './SanitizerInterface';
+import { SanitizerInterface, SanitationMetadata } from './interfaces';
 import validator from 'validator';
 
 /**
