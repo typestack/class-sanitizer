@@ -1,5 +1,9 @@
 # class-sanitizer
 
+![Build Status](https://github.com/typestack/class-sanitizer/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/typestack/class-sanitizer/branch/master/graph/badge.svg)](https://codecov.io/gh/typestack/class-sanitizer)
+[![npm version](https://badge.fury.io/js/class-sanitizer.svg)](https://badge.fury.io/js/class-sanitizer)
+
 Allows to use decorator and non-decorator based sanitation in your Typescript classes.
 Internally uses [validator.js][validator.js] to make sanitation.
 
