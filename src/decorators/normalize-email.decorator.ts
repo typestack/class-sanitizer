@@ -3,7 +3,7 @@ import { SanitationOptions } from '../interfaces';
 import { SanitizeTypes } from '../enums';
 
 /**
- * Canonicalize an email address.
+ * Normalizes the received email address.
  */
 export function NormalizeEmail(lowercase?: boolean, annotationOptions?: SanitationOptions) {
   return function (object: Object, propertyName: string) {

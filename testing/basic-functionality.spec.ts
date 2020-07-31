@@ -1,5 +1,5 @@
 import { defaultMetadataStorage } from '../src/default-storage.const';
-import { Trim, Ltrim, Rtrim } from '../src/decorators';
+import { Trim, Ltrim, Rtrim, SanitizeNested } from '../src/decorators';
 import { sanitize } from '../src';
 
 describe('Basic Functionality', () => {
@@ -57,6 +57,7 @@ describe('Basic Functionality', () => {
     }
 
     class TestClass {
+      @SanitizeNested({ each: true })
       children: InnerTestClass[];
     }
 

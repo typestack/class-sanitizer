@@ -116,38 +116,32 @@ export class Sanitizer {
   /**
    * Convert the input to a date, or null if the input is not a date.
    */
-  toDate(input: any): Date {
+  toDate(input: any): Date | null {
     if (input instanceof Date) {
       return input;
     }
-    return validator.toDate(input);
+    return validator.toDate(input.toString());
   }
 
   /**
    * Convert the input to a float.
    */
   toFloat(input: any): number {
-    if (typeof input === 'number') {
-      return input;
-    }
-    return validator.toFloat(input);
+    return validator.toFloat('' + input);
   }
 
   /**
    * Convert the input to an integer, or NaN if the input is not an integer.
    */
   toInt(input: any, radix?: number): number {
-    if (typeof input === 'number') {
-      return input | 0;
-    }
-    return validator.toInt(input, radix);
+    return validator.toInt('' + input, radix);
   }
 
   /**
    * Convert the input to a string.
    */
   toString(input: any): string {
-    return validator.toString(input);
+    return '' + input;
   }
 
   /**

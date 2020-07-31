@@ -3,7 +3,6 @@ import { Trim } from '../src/decorators';
 import { sanitize } from '../src';
 
 describe('Inheritance', () => {
-  /** We need to reset the metadata storage before each test to isolate them. */
   beforeEach(() => defaultMetadataStorage.reset());
 
   it('should execute decorators defined on base class', () => {
