@@ -45,8 +45,23 @@ describe('Basic Functionality', () => {
     expect(instance.both).toBe('text');
   });
 
+  it('can validate values in arrays', () => {
+    class TestClass {
+      @Trim([' '], { each: true })
+      texts: string[];
+    }
+
+    const instance = new TestClass();
+    instance.texts = [' textA ', ' textB '];
+
+    sanitize(instance);
+
+    expect(instance.texts[0]).toBe('textA');
+    expect(instance.texts[1]).toBe('textB');
+  });
+
   // Note: This is not implemented.
-  it.skip('can validate values in arrays', () => {
+  it.skip('can validate nested values in arrays', () => {
     class InnerTestClass {
       @Trim()
       text: string;
@@ -59,16 +74,22 @@ describe('Basic Functionality', () => {
     class TestClass {
       @SanitizeNested({ each: true })
       children: InnerTestClass[];
+
+      @SanitizeNested({ each: false })
+      child: InnerTestClass;
     }
 
     const instance = new TestClass();
     const innerA = new InnerTestClass(' innerA ');
     const innerB = new InnerTestClass(' innerB ');
+    const innerC = new InnerTestClass(' innerC ');
     instance.children = [innerA, innerB];
+    instance.child = innerC;
 
     sanitize(instance);
 
     expect(instance.children[0].text).toBe('innerA');
     expect(instance.children[1].text).toBe('innerB');
+    expect(instance.child.text).toBe('innerC');
   });
 });
