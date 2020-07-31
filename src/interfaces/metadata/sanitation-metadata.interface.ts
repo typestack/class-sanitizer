@@ -28,11 +28,6 @@ export interface SanitationMetadata {
   value2?: any;
 
   /**
-   * Sanitation message to be shown in the case of error.
-   */
-  message?: string;
-
-  /**
    * Specifies if sanitized value is an array and each of its item must be sanitized.
    */
   each?: boolean;
