@@ -4,71 +4,160 @@
 [![codecov](https://codecov.io/gh/typestack/class-sanitizer/branch/master/graph/badge.svg)](https://codecov.io/gh/typestack/class-sanitizer)
 [![npm version](https://badge.fury.io/js/class-sanitizer.svg)](https://badge.fury.io/js/class-sanitizer)
 
-Allows to use decorator and non-decorator based sanitation in your Typescript classes.
-Internally uses [validator.js][validator.js] to make sanitation.
+Decorator based class property sanitation in Typescript powered by [validator.js][validator.js].
 
 ## Installation
 
-1. Install module:
-
-   `npm install class-sanitizer --save`
-
-2. ES6 features are used, so you may want to install [es6-shim](https://github.com/paulmillr/es6-shim) too:
-
-   `npm install es6-shim --save`
-
-   if you are building nodejs app, you may want to `require("es6-shim");` in your app.
-   or if you are building web app, you man want to add `<script src="path-to-shim/es6-shim.js">` on your page.
+```bash
+npm install class-sanitizer --save
+```
 
 ## Usage
 
-Create your class and put some sanity decorators on its properties you want to sanitize:
+To start using the library simply create some classes and add some sanitization decorators to the properties. When calling
+`sanitize(instance)` the library will automatically apply the rules defined in the decorators to the properties and value of
+every marked property respectively.
+
+> **NOTE:** Every sanitization decorator is property decorator meaning it cannot be placed on parameters or class definitions.
 
 ```typescript
-import { sanitize, Trim, Rtrim, Blacklist } from 'class-sanitizer';
+import { sanitize, Trim } from 'class-sanitizer';
 
-export class Post {
+class TestClass {
   @Trim()
-  title: string;
+  label: string;
 
-  @Rtrim(['.'])
-  @Blacklist(/(1-9)/)
-  text: string;
+  constructor(label: string) {
+    this.label = label;
+  }
 }
 
-let post1 = new Post();
-post1.title = ' Hello world ';
-post1.text = '1. this is a great (2) post about hello 3 world.';
+const instance = new TestClass(' text-with-spaces-on-both-end ');
 
-sanitize(post);
-console.log(post);
-// now post will look like this:
-// Post {
-// title: "Hello world",
-// text: ". this is a great  post about hello  world"
-// }
+sanitize(instance);
+// -> the label property is trimmed now
+// -> { label: 'text-with-spaces-on-both-end' }
 ```
 
-## Custom sanitation classes
+### Validating arrays
 
-If you have custom sanity logic you want to use as annotations you can do it this way:
+Every decorator expects a `SanitationOptions` object. When the `each` property is set to `true`
+the array will be iterated and the decorator will be applied to every element of the array.
 
-1. First create a file, lets say `LetterReplacer.ts`, and create there a new class:
+```ts
+import { sanitize, Trim } from 'class-sanitizer';
+
+class TestClass {
+  @Trim(undefined, { each: true })
+  labels: string[];
+
+  constructor(labels: string[]) {
+    this.labels = labels;
+  }
+}
+
+const instance = new TestClass([' labelA ', ' labelB', 'labelC ']);
+
+sanitize(instance);
+// -> Every value is trimmed in instance.labels now.
+// -> { labels: ['labelA', 'labelB', 'labelC']}
+```
+
+### Inheritance
+
+Class inheritance is supported, every decorator defined on the base-class will
+be applied to the property with same name on the descendant class if the property exists.
+
+> **Note: Only one level of inheritance is supported!** So if you have `ClassA` inherit `ClassB` which inherits `ClassC`
+> decorators from `ClassC` wont be applied to `ClassA` when sanitizing.
+
+```ts
+import { sanitize, Trim } from 'class-sanitizer';
+
+class BaseClass {
+  @Trim()
+  baseText: string;
+}
+
+class DescendantClass extends BaseClass {
+  @Trim()
+  descendantText: string;
+}
+
+const instance = new DescendantClass();
+instance.baseText = ' text ';
+instance.descendantText = ' text ';
+
+sanitize(instance);
+// -> Both value is trimmed now.
+// -> { baseText: 'text', descendantText: 'text' }
+```
+
+### Sanitizing nested values with `@SanitizeNested()` decorator
+
+The `@SanitizeNested` property can be used to instruct the library to lookup the sanitization rules
+for the class instance found on the marked property and sanitize it.
+
+```ts
+import { sanitize, Trim, SanitizeNested } from 'class-sanitizer';
+
+class InnerTestClass {
+  @Trim()
+  text: string;
+
+  constructor(text: string) {
+    this.text = text;
+  }
+}
+
+class TestClass {
+  @SanitizeNested({ each: true })
+  children: InnerTestClass[];
+
+  @SanitizeNested({ each: false })
+  child: InnerTestClass;
+}
+
+const instance = new TestClass();
+const innerA = new InnerTestClass(' innerA ');
+const innerB = new InnerTestClass(' innerB ');
+const innerC = new InnerTestClass(' innerC ');
+instance.children = [innerA, innerB];
+instance.child = innerC;
+
+sanitize(instance);
+// -> Both values in the array on `children` property and value on `child` property is sanitized.
+// -> { children: [ { text: 'innerA' }, { text: 'innerB' }], child: { 'innerC' }}
+```
+
+### Custom sanitation classes
+
+The `@SanitizerConstraint(` decorator can be used to define custom sanitization logic. Creating a custom sanitization class requires the following steps:
+
+1. Create a class which implements the `CustomSanitizer` interface and decorate the class with the `@SanitizerConstraint()` decorator.
 
    ```typescript
-   import { SanitizerInterface, SanitizerConstraint } from 'class-sanitizer';
+   import { CustomSanitizer, SanitizerConstraint } from 'class-sanitizer';
+   import { Container } from 'typedi';
 
    @SanitizerConstraint()
-   export class LetterReplacer implements SanitizerInterface {
+   export class LetterReplacer implements CustomSanitizer {
+     /** If you use TypeDI, you can inject services to properties with `Container.get` function. */
+     someInjectedService = Container.get(SomeClass);
+
+     /**
+      * This function will be called during sanitization.
+      *  1, It must be a sync function
+      *  2, It must return the transformed value.
+      */
+
      sanitize(text: string): string {
        return text.replace(/o/g, 'w');
      }
    }
    ```
 
-   Your class must implement `SanitizerInterface` interface and its `sanitize` method, which defines sanitation logic.
-
-2. Then you can use your new sanitation constraint in your class:
+1. Then you can use your new sanitation constraint in your class:
 
    ```typescript
    import { Sanitize } from 'class-sanitizer';
@@ -80,9 +169,7 @@ If you have custom sanity logic you want to use as annotations you can do it thi
    }
    ```
 
-   Here we set our newly created `LetterReplacer` sanitation constraint for `Post.title`.
-
-3. Now you can use sanitizer as usual:
+1. Now you can use sanitizer as usual:
 
    ```typescript
    import { sanitize } from 'class-sanitizer';
@@ -90,71 +177,35 @@ If you have custom sanity logic you want to use as annotations you can do it thi
    sanitize(post);
    ```
 
-## Using service container
-
-Sanitizer supports service container in the case if want to inject dependencies into your custom sanity constraint
-classes. Here is example how to integrate it with [typedi][typedi]:
-
-```typescript
-import { Container } from 'typedi';
-import { Sanitizer } from 'class-sanitizer';
-
-// do this somewhere in the global application level:
-let sanitizer = Container.get(Sanitizer);
-sanitizer.container = Container;
-
-// now everywhere you can inject Sanitizer class which will go from the container
-// also you can inject classes using constructor injection into your custom sanitizers.
-```
-
-## Manual sanitation
+### Manual sanitation
 
 There are several method exist in the Sanitizer that allows to perform non-decorator based sanitation:
 
 ```typescript
 import Sanitizer from 'class-sanitizer';
 
-Sanitizer.blacklist(str, chars);
-Sanitizer.escape(str);
-Sanitizer.ltrim(str, chars);
-Sanitizer.normalizeEmail(str, isLowercase);
-Sanitizer.rtrim(str, chars);
-Sanitizer.stripLow(str, keepNewLines);
-Sanitizer.toBoolean(input, isStrict);
-Sanitizer.toDate(input);
-Sanitizer.toFloat(input);
-Sanitizer.toInt(input, radix);
-Sanitizer.toString(input);
-Sanitizer.trim(str, chars);
-Sanitizer.whitelist(str, chars);
+Sanitizer.trim(` Let's trim this! `);
 ```
 
-## Sanity decorators
+## Sanitization decorators
 
-| Decorator                        | Description                                                                                                                                                              |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `@Blacklist(chars: RegExp)`      | Remove characters that appear in the blacklist.                                                                                                                          |
-| `@Escape()`                      | Replace <, >, &, ', " and / with HTML entities.                                                                                                                          |
-| `@Ltrim()`                       | Trim characters from the left-side of the input.                                                                                                                         |
-| `@NormalizeEmail()`              | Canonicalize an email address.                                                                                                                                           |
-| `@Rtrim()`                       | Trim characters from the right-side of the input.                                                                                                                        |
-| `@StripLow()`                    | Remove characters with a numerical value < 32 and 127, mostly control characters.                                                                                        |
-| `@ToBoolean(isStrict?: boolean)` | Convert the input to a boolean. Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.                                  |
-| `@ToDate()`                      | Convert the input to a date, or null if the input is not a date.                                                                                                         |
-| `@ToFloat()`                     | Convert the input to a float.                                                                                                                                            |
-| `@ToInt()`                       | Convert the input to an integer, or NaN if the input is not an integer.                                                                                                  |
-| `@ToString()`                    | Convert the input to a string.                                                                                                                                           |
-| `@Trim(chars?: string[])`        | Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.                                                      |
-| `@Whitelist(chars: RegExp)`      | Remove characters that do not appear in the whitelist.\* The characters are used in a RegExp and so you will need to escape some chars, e.g. whitelist(input, '\\[\\]'). |
+The following property decorators are available.
 
-## Samples
-
-Take a look on samples in [./sample](https://github.com/pleerock/class-sanitizer/tree/master/sample) for more examples of
-usages.
-
-## Todos
-
-- cover with tests
+| Decorator                              | Description                                                                                                                              |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `@Blacklist(chars: string)`            | Removes all characters that appear in the blacklist.                                                                                     |
+| `@Whitelist(chars: string)`            | Removes all characters that don't appear in the whitelist.                                                                               |
+| `@Trim(chars?: string)`                | Trims characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.                     |
+| `@Ltrim(chars?: string)`               | Trims characters from the left-side of the input.                                                                                        |
+| `@Rtrim(chars?: string)`               | Trims characters from the right-side of the input.                                                                                       |
+| `@Escape()`                            | Replaces <, >, &, ', " and / with HTML entities.                                                                                         |
+| `@NormalizeEmail(lowercase?: boolean)` | Normalizes an email address.                                                                                                             |
+| `@StripLow(keepNewLines?: boolean)`    | Removes characters with a numerical value < 32 and 127, mostly control characters.                                                       |
+| `@ToBoolean(isStrict?: boolean)`       | Converts the input to a boolean. Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true. |
+| `@ToDate()`                            | Converts the input to a date, or null if the input is not a date.                                                                        |
+| `@ToFloat()`                           | Converts the input to a float, or NaN if the input is not an integer.                                                                    |
+| `@ToInt(radix?: number)`               | Converts the input to an integer, or NaN if the input is not an integer.                                                                 |
+| `@ToString()`                          | Converts the input to a string.                                                                                                          |
 
 [validator.js]: https://github.com/chriso/validator.js
 [typedi]: https://github.com/pleerock/typedi
