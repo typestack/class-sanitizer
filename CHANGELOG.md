@@ -2,9 +2,15 @@
 
 _This changelog follows the [keep a changelog][keep-a-changelog]_ format to maintain a human readable changelog.
 
-## [1.0.0][v1.0.0] - 2020-07-31 [BREAKING CHANGE]
+## [1.0.1][v1.0.1] - 2020-07-31
 
 > This is the **final release of the library**, if you lack some functionality please use [class-transformer][ct] and [class-validator][cv] instead.
+
+#### Fixed
+
+- sanitization won't skip properties with empty string values anymore (`''`)
+
+## [1.0.0][v1.0.0] - 2020-07-31 [BREAKING CHANGE]
 
 #### Fixed
 
@@ -50,6 +56,7 @@ _This changelog follows the [keep a changelog][keep-a-changelog]_ format to main
 
 Initial version.
 
+[v1.0.0]: https://github.com/typestack/class-sanitizer/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/typestack/class-sanitizer/compare/v0.0.5...v1.0.0
 [v0.0.5]: https://github.com/typestack/class-sanitizer/compare/v0.0.4...v0.0.5
 [v0.0.4]: https://github.com/typestack/class-sanitizer/compare/v0.0.3...v0.0.4
