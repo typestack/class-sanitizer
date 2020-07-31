@@ -2,7 +2,7 @@ import { SanitationMetadata } from './metadata/SanitationMetadata';
 import { SanitizeTypes } from './SanitizeTypes';
 import { defaultMetadataStorage } from './metadata/MetadataStorage';
 import { SanitizerInterface } from './SanitizerInterface';
-import * as validatatorJs from 'validator';
+import validator from 'validator';
 
 /**
  * Sanitizer performs sanitation of the given object based on its metadata.
@@ -63,35 +63,35 @@ export class Sanitizer {
   blacklist(str: string, chars: string): string;
   blacklist(str: string, chars: RegExp): string;
   blacklist(str: string, chars: RegExp | string): string {
-    return validatatorJs.blacklist(str, <string>chars);
+    return validator.blacklist(str, <string>chars);
   }
 
   /**
    * Replace <, >, &, ', " and / with HTML entities.
    */
   escape(str: string): string {
-    return validatatorJs.escape(str);
+    return validator.escape(str);
   }
 
   /**
    * Trim characters from the left-side of the input.
    */
   ltrim(str: string, chars?: string[]): string {
-    return validatatorJs.ltrim(str, chars ? chars.join() : undefined);
+    return validator.ltrim(str, chars ? chars.join() : undefined);
   }
 
   /**
    * Canonicalize an email address.
    */
   normalizeEmail(str: string, lowercase?: boolean): string | false {
-    return validatatorJs.normalizeEmail(str, lowercase);
+    return validator.normalizeEmail(str, { all_lowercase: lowercase });
   }
 
   /**
    * Trim characters from the right-side of the input.
    */
   rtrim(str: string, chars?: string[]): string {
-    return validatatorJs.rtrim(str, chars ? chars.join() : undefined);
+    return validator.rtrim(str, chars ? chars.join() : undefined);
   }
 
   /**
@@ -100,7 +100,7 @@ export class Sanitizer {
    * Unicode-safe in JavaScript.
    */
   stripLow(str: string, keepNewLines?: boolean): string {
-    return validatatorJs.stripLow(str, keepNewLines);
+    return validator.stripLow(str, keepNewLines);
   }
 
   /**
@@ -109,7 +109,7 @@ export class Sanitizer {
    */
   toBoolean(input: any, isStrict?: boolean): boolean {
     if (typeof input === 'string') {
-      return validatatorJs.toBoolean(input, isStrict);
+      return validator.toBoolean(input, isStrict);
     }
     return !!input;
   }
@@ -121,7 +121,7 @@ export class Sanitizer {
     if (input instanceof Date) {
       return input;
     }
-    return validatatorJs.toDate(input);
+    return validator.toDate(input);
   }
 
   /**
@@ -131,7 +131,7 @@ export class Sanitizer {
     if (typeof input === 'number') {
       return input;
     }
-    return validatatorJs.toFloat(input);
+    return validator.toFloat(input);
   }
 
   /**
@@ -141,21 +141,21 @@ export class Sanitizer {
     if (typeof input === 'number') {
       return input | 0;
     }
-    return validatatorJs.toInt(input, radix);
+    return validator.toInt(input, radix);
   }
 
   /**
    * Convert the input to a string.
    */
   toString(input: any): string {
-    return validatatorJs.toString(input);
+    return validator.toString(input);
   }
 
   /**
    * Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.
    */
   trim(str: string, chars?: string[]): string {
-    return validatatorJs.trim(str, chars ? chars.join() : undefined);
+    return validator.trim(str, chars ? chars.join() : undefined);
   }
 
   /**
@@ -165,7 +165,7 @@ export class Sanitizer {
   whitelist(str: string, chars: string): string;
   whitelist(str: string, chars: RegExp): string;
   whitelist(str: string, chars: RegExp | string): string {
-    return validatatorJs.whitelist(str, <string>chars);
+    return validator.whitelist(str, <string>chars);
   }
 
   // -------------------------------------------------------------------------
