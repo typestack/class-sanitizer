@@ -2,9 +2,8 @@
   "name": "class-sanitizer",
   "private": true,
   "version": "0.0.5",
-  "description": "Class-based sanitation in Typescript using decorators",
+  "description": "Decorator based class property sanitation in Typescript.",
   "license": "MIT",
-  "readmeFilename": "README.md",
   "author": {
     "name": "Umed Khudoiberdiev",
     "email": "pleerock.me@gmail.com"
@@ -12,9 +11,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/pleerock/class-sanitizer.git"
-  },
-  "bugs": {
-    "url": "https://github.com/pleerock/class-sanitizer/issues"
   },
   "tags": [
     "sanitizer",
