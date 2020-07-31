@@ -138,6 +138,7 @@ export class Sanitizer {
    * Convert the input to a float.
    */
   toFloat(input: any): number {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return validator.toFloat('' + input);
   }
 
@@ -145,6 +146,7 @@ export class Sanitizer {
    * Convert the input to an integer, or NaN if the input is not an integer.
    */
   toInt(input: any, radix?: number): number {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return validator.toInt('' + input, radix);
   }
 
@@ -152,6 +154,7 @@ export class Sanitizer {
    * Convert the input to a string.
    */
   toString(input: any): string {
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return '' + input;
   }
 

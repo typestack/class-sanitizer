@@ -11,7 +11,7 @@ describe('SanitizerConstraint', () => {
     @SanitizerConstraint()
     class CustomSanitizerImpl implements CustomSanitizer {
       sanitize(value: string): string {
-        return 'replaced';
+        return 'added ' + value;
       }
     }
 
@@ -25,14 +25,14 @@ describe('SanitizerConstraint', () => {
 
     sanitize(instance);
 
-    expect(instance.text).toBe('replaced');
+    expect(instance.text).toBe('added original');
   });
 
   it('should execute custom decorators in array property with "each: true"', () => {
     @SanitizerConstraint()
     class CustomSanitizerImpl implements CustomSanitizer {
       sanitize(value: string): string {
-        return 'replaced';
+        return 'added ' + value;
       }
     }
 
@@ -46,6 +46,6 @@ describe('SanitizerConstraint', () => {
 
     sanitize(instance);
 
-    expect(instance.text[0]).toBe('replaced');
+    expect(instance.text[0]).toBe('added original');
   });
 });
