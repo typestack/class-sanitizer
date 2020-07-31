@@ -70,4 +70,12 @@ export class MetadataStorage {
   getSanitizeConstraintsForObject(object: Function): ConstraintMetadata[] {
     return this.constraintMetadatas.filter(metadata => metadata.object === object);
   }
+
+  /**
+   * Restes the metadata storage.
+   */
+  public reset() {
+    this._constraintMetadatas = [];
+    this._sanitationMetadata = [];
+  }
 }
