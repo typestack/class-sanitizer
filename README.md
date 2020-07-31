@@ -15,10 +15,11 @@ npm install class-sanitizer --save
 ## Usage
 
 To start using the library simply create some classes and add some sanitization decorators to the properties. When calling
-`sanitize(instance)` the library will automatically apply the rules defined in the decorators to the properties and value of
-every marked property respectively.
+`sanitize(instance)` the library will automatically apply the rules defined in the decorators to the properties and update
+the value of every marked property respectively.
 
-> **NOTE:** Every sanitization decorator is property decorator meaning it cannot be placed on parameters or class definitions.
+> **NOTE:**  
+> Every sanitization decorator is property decorator meaning it cannot be placed on parameters or class definitions.
 
 ```typescript
 import { sanitize, Trim } from 'class-sanitizer';
@@ -68,8 +69,9 @@ sanitize(instance);
 Class inheritance is supported, every decorator defined on the base-class will
 be applied to the property with same name on the descendant class if the property exists.
 
-> **Note: Only one level of inheritance is supported!** So if you have `ClassA` inherit `ClassB` which inherits `ClassC`
-> decorators from `ClassC` wont be applied to `ClassA` when sanitizing.
+> **Note**:  
+> **Only one level of inheritance is supported!** So if you have `ClassA` inherit `ClassB` which inherits `ClassC` the
+> decorators from `ClassC` won't be applied to `ClassA` when sanitizing.
 
 ```ts
 import { sanitize, Trim } from 'class-sanitizer';
@@ -209,3 +211,5 @@ The following property decorators are available.
 
 [validator.js]: https://github.com/chriso/validator.js
 [typedi]: https://github.com/pleerock/typedi
+[ct]: https://github.com/typestack/class-transformer
+[cv]: https://github.com/typestack/class-validator
