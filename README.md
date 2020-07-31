@@ -7,7 +7,7 @@
 Decorator based class property sanitation in Typescript powered by [validator.js][validator.js].
 
 > **DEPRECATION NOTICE:**  
-> This library is considered to be deprecated and won't be updated anymore. Please use [class-transformer][ct] and [class-validator][cv] libraries instead.
+> This library is considered to be deprecated and won't be updated anymore. Please use the [class-transformer][ct] and/or [class-validator][cv] libraries instead.
 
 ## Installation
 
