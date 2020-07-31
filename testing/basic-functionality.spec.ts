@@ -1,6 +1,6 @@
 import { defaultMetadataStorage } from '../src/default-storage.const';
 import { Trim, Ltrim, Rtrim, SanitizeNested } from '../src/decorators';
-import { sanitize } from '../src';
+import { sanitize, Sanitizer, sanitizeAsync } from '../src';
 
 describe('Basic Functionality', () => {
   /** We need to reset the metadata storage before each test to isolate them. */
@@ -90,5 +90,25 @@ describe('Basic Functionality', () => {
     expect(instance.children[0].text).toBe('innerA');
     expect(instance.children[1].text).toBe('innerB');
     expect(instance.child.text).toBe('innerC');
+  });
+
+  it('should support manual sanitation', () => {
+    const instannce = new Sanitizer();
+
+    expect(instannce.trim(' test ')).toBe('test');
+  });
+
+  it('should do nothing with unknown input', () => {
+    const input = { some: ' stuff ' };
+
+    expect(sanitize(input)).toEqual(input);
+  });
+
+  it('should resolve result in ssync mode ', async () => {
+    const input = { some: ' stuff ' };
+
+    const result = await sanitizeAsync(input);
+
+    expect(result).toEqual(input);
   });
 });
