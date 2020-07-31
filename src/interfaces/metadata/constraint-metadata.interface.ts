@@ -1,4 +1,4 @@
-import { SanitizerInterface } from '../sanitizer.interface';
+import { CustomSanitizer } from '../custom-sanitizer.interface';
 
 /**
  * This metadata interface contains information for custom sanitizers.
@@ -12,5 +12,5 @@ export interface ConstraintMetadata {
   /**
    * Instance of the object which performs sanitation.
    */
-  instance?: SanitizerInterface;
+  instance?: CustomSanitizer;
 }

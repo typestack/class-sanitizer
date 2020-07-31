@@ -1,7 +1,7 @@
 /**
  * Custom sanitizers must implement this interface to provide custom sanitation logic.
  */
-export interface SanitizerInterface {
+export interface CustomSanitizer {
   /**
    * Method to be called to perform given value sanitation.
    */

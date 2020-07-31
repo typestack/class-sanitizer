@@ -1,6 +1,6 @@
 import { SanitizeTypes } from './enums';
 import { defaultMetadataStorage } from './default-storage.const';
-import { SanitizerInterface, SanitationMetadata } from './interfaces';
+import { CustomSanitizer, SanitationMetadata } from './interfaces';
 import validator from 'validator';
 
 /**
@@ -214,7 +214,7 @@ export class Sanitizer {
     }
   }
 
-  private createInstance(object: Function): SanitizerInterface {
+  private createInstance(object: Function): CustomSanitizer {
     return this._container ? this._container.get(object) : new (<any>object)();
   }
 }
