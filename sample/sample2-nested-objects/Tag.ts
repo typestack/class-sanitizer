@@ -1,8 +1,6 @@
-import {Trim} from "../../src/index";
+import { Trim } from '../../src/index';
 
 export class Tag {
-
-    @Trim()
-    name: string;
-
+  @Trim()
+  name: string;
 }

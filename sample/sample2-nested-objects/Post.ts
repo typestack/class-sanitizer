@@ -1,11 +1,9 @@
-import {Tag} from "./Tag";
+import { Tag } from './Tag';
 
 export class Post {
+  title: string;
 
-    title: string;
-
-    // todo
-    // @SanitizeNested()
-    tags: Tag[];
-
+  // todo
+  // @SanitizeNested()
+  tags: Tag[];
 }
