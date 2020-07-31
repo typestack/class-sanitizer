@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { Escape } from '.';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { Escape } from '..';
+import { sanitize } from '../..';
 
 describe('Escape', () => {
   beforeEach(() => defaultMetadataStorage.reset());

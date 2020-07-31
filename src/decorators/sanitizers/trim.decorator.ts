@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { SanitationOptions } from '../interfaces';
-import { SanitizeTypes } from '../enums';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { SanitationOptions } from '../../interfaces';
+import { SanitizeTypes } from '../../enums';
 
 /**
  * Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.

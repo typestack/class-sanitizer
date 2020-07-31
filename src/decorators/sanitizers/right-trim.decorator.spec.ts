@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { Rtrim } from '../decorators';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { Rtrim } from '..';
+import { sanitize } from '../..';
 
 describe('Rtrim', () => {
   beforeEach(() => defaultMetadataStorage.reset());

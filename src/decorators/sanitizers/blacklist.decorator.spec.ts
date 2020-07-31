@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { Blacklist } from '../decorators';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { Blacklist } from '..';
+import { sanitize } from '../..';
 
 describe('Blacklist', () => {
   beforeEach(() => defaultMetadataStorage.reset());

@@ -1,19 +1,19 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { ToFloat } from '.';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { ToInt } from '..';
+import { sanitize } from '../..';
 
-describe('ToFloat', () => {
+describe('ToInt', () => {
   beforeEach(() => defaultMetadataStorage.reset());
 
-  it('should convert received string numbers to number', () => {
+  it('should convert received string numbers to int number', () => {
     class TestClass {
-      @ToFloat()
+      @ToInt()
       propA: string;
 
-      @ToFloat()
+      @ToInt()
       propB: string;
 
-      @ToFloat()
+      @ToInt()
       propC: string;
     }
     const instance = new TestClass();
@@ -23,20 +23,20 @@ describe('ToFloat', () => {
 
     sanitize(instance);
 
-    expect(instance.propA).toEqual(1);
-    expect(instance.propB).toEqual(3.14);
-    expect(instance.propC).toEqual(0.001);
+    expect(instance.propA).toBe(1);
+    expect(instance.propB).toBe(3);
+    expect(instance.propC).toBe(0);
   });
 
-  it('should convert received numbers to number', () => {
+  it('should convert received numbers to int number', () => {
     class TestClass {
-      @ToFloat()
+      @ToInt()
       propA: number;
 
-      @ToFloat()
+      @ToInt()
       propB: number;
 
-      @ToFloat()
+      @ToInt()
       propC: number;
     }
     const instance = new TestClass();
@@ -46,14 +46,14 @@ describe('ToFloat', () => {
 
     sanitize(instance);
 
-    expect(instance.propA).toEqual(1);
-    expect(instance.propB).toEqual(3.14);
-    expect(instance.propC).toEqual(0.001);
+    expect(instance.propA).toBe(1);
+    expect(instance.propB).toBe(3);
+    expect(instance.propC).toBe(0);
   });
 
   it('should convert invalid values to NaN', () => {
     class TestClass {
-      @ToFloat()
+      @ToInt()
       propA: string;
     }
     const instance = new TestClass();
@@ -64,9 +64,9 @@ describe('ToFloat', () => {
     expect(instance.propA).toBeNaN();
   });
 
-  it('should convert received string numbers to number in array property with "each: true"', () => {
+  it('should convert received string numbers to int number in array property with "each: true"', () => {
     class TestClass {
-      @ToFloat({ each: true })
+      @ToInt(undefined, { each: true })
       propA: string[];
     }
     const instance = new TestClass();
@@ -75,6 +75,6 @@ describe('ToFloat', () => {
     sanitize(instance);
 
     expect(instance.propA[0]).toEqual(1);
-    expect(instance.propA[1]).toEqual(3.14);
+    expect(instance.propA[1]).toEqual(3);
   });
 });

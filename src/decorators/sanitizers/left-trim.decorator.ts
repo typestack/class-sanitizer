@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { SanitationOptions } from '../interfaces';
-import { SanitizeTypes } from '../enums';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { SanitationOptions } from '../../interfaces';
+import { SanitizeTypes } from '../../enums';
 
 /**
  * Trim characters from the left-side of the input.

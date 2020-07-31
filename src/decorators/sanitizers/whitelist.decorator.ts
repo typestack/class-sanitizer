@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { SanitationOptions } from '../interfaces';
-import { SanitizeTypes } from '../enums';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { SanitationOptions } from '../../interfaces';
+import { SanitizeTypes } from '../../enums';
 
 /**
  * Remove characters that do not appear in the whitelist.

@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { StripLow } from '.';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { StripLow } from '..';
+import { sanitize } from '../..';
 
 describe('StripLow', () => {
   beforeEach(() => defaultMetadataStorage.reset());

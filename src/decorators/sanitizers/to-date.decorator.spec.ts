@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { ToDate } from '.';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { ToDate } from '..';
+import { sanitize } from '../..';
 
 describe('ToDate', () => {
   beforeEach(() => defaultMetadataStorage.reset());

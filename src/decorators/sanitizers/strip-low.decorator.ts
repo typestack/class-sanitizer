@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { SanitationOptions } from '../interfaces';
-import { SanitizeTypes } from '../enums';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { SanitationOptions } from '../../interfaces';
+import { SanitizeTypes } from '../../enums';
 
 /**
  * Remove characters with a numerical value < 32 and 127, mostly control characters.

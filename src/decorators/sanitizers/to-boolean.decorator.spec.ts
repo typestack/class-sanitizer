@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { ToBoolean } from '.';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { ToBoolean } from '..';
+import { sanitize } from '../..';
 
 describe('ToBoolean', () => {
   beforeEach(() => defaultMetadataStorage.reset());

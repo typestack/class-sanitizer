@@ -1,6 +1,6 @@
-import { defaultMetadataStorage } from '../default-storage.const';
-import { NormalizeEmail } from '../decorators';
-import { sanitize } from '..';
+import { defaultMetadataStorage } from '../../default-storage.const';
+import { NormalizeEmail } from '..';
+import { sanitize } from '../..';
 
 describe('NormalizeEmail', () => {
   beforeEach(() => defaultMetadataStorage.reset());
