@@ -1,5 +1,5 @@
 import { defaultMetadataStorage } from './metadata/MetadataStorage';
-import { SanitizeTypes } from './SanitizeTypes';
+import { SanitizeTypes } from './enums';
 import { SanitationOptions } from './interfaces';
 
 /**

@@ -1,4 +1,4 @@
-import { SanitizeTypes } from './SanitizeTypes';
+import { SanitizeTypes } from './enums';
 import { defaultMetadataStorage } from './metadata/MetadataStorage';
 import { SanitizerInterface, SanitationMetadata } from './interfaces';
 import validator from 'validator';
