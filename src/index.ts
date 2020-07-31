@@ -1,8 +1,8 @@
-import { Sanitizer } from './Sanitizer';
+import { Sanitizer } from './sanitizer.class';
 
 export * from './decorators';
 export * from './interfaces';
-export * from './Sanitizer';
+export * from './sanitizer.class';
 
 const sanitizer = new Sanitizer();
 export default sanitizer;
