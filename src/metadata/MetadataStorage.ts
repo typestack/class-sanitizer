@@ -58,10 +58,7 @@ export class MetadataStorage {
   getSanitizeMetadatasForObject(targetConstructor: Function): SanitationMetadata[] {
     return this.sanitationMetadata.filter(function (metadata) {
       if (metadata.object === targetConstructor) return false;
-      if (
-        metadata.object instanceof Function &&
-        !(targetConstructor.prototype instanceof (metadata.object as Function))
-      )
+      if (metadata.object instanceof Function && !(targetConstructor.prototype instanceof metadata.object))
         return false;
 
       return true;
@@ -79,4 +76,4 @@ export class MetadataStorage {
 /**
  * Default metadata storage used as singleton and can be used to storage all metadatas in the system.
  */
-export let defaultMetadataStorage = new MetadataStorage();
+export const defaultMetadataStorage = new MetadataStorage();

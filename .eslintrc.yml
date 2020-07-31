@@ -22,6 +22,7 @@ rules:
   '@typescript-eslint/no-inferrable-types': off
   '@typescript-eslint/no-explicit-any': off
   '@typescript-eslint/member-ordering': 'error'
+  '@typescript-eslint/restrict-template-expressions': off
   # TODO: Remove these and fixed issues once we merged all the current PRs. 
   '@typescript-eslint/ban-types': off 
   '@typescript-eslint/no-unsafe-return': off
