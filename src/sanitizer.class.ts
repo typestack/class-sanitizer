@@ -1,35 +1,18 @@
 import { SanitizeTypes } from './enums';
 import { defaultMetadataStorage } from './default-storage.const';
-import { CustomSanitizer, SanitationMetadata } from './interfaces';
+import { SanitationMetadata } from './interfaces';
 import validator from 'validator';
 
 /**
  * Sanitizer performs sanitation of the given object based on its metadata.
  */
 export class Sanitizer {
-  // -------------------------------------------------------------------------
-  // Properties
-  // -------------------------------------------------------------------------
-
-  private _container: { get(type: Function): any };
   private metadataStorage = defaultMetadataStorage;
 
-  // -------------------------------------------------------------------------
-  // Accessors
-  // -------------------------------------------------------------------------
-
-  set container(container: { get(type: Function): any }) {
-    this._container = container;
-  }
-
-  // -------------------------------------------------------------------------
-  // Annotation-based Validation Methods
-  // -------------------------------------------------------------------------
-
   /**
-   * Performs sanitation of the given object based on annotations used in given object class.
+   * Performs sanitation of the given object based on the decorator annotations in the class definition.
    */
-  sanitize(classInstance: Record<string, any>): void {
+  public sanitize<T = Record<string, any>>(classInstance: Record<string, any>): T {
     this.metadataStorage
       .getSanitizeMetadatasForClassInstance(classInstance)
       .filter(metadata => !!classInstance[metadata.propertyName])
@@ -49,57 +32,51 @@ export class Sanitizer {
       });
 
     // todo: implemented nested sanitation
+    return classInstance as T;
   }
 
   /**
    * Performs sanitation of the given object based on annotations used in given object class.
    * Performs in async-style, useful to use it in chained promises.
    */
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async sanitizeAsync<T>(classInstance: T): Promise<T> {
-    await this.sanitize(classInstance);
-
-    return classInstance;
+    return this.sanitize<T>(classInstance);
   }
-
-  // -------------------------------------------------------------------------
-  // Sanitation Methods
-  // -------------------------------------------------------------------------
 
   /**
    * Remove characters that appear in the blacklist. The characters are used in a RegExp and so you will need to
    * escape some chars, e.g @Blacklist('\\[\\]')
    */
-  blacklist(str: string, chars: string): string;
-  blacklist(str: string, chars: RegExp): string;
-  blacklist(str: string, chars: RegExp | string): string {
-    return validator.blacklist(str, <string>chars);
+  public blacklist(str: string, chars: string): string {
+    return validator.blacklist(str, chars);
   }
 
   /**
    * Replace <, >, &, ', " and / with HTML entities.
    */
-  escape(str: string): string {
+  public escape(str: string): string {
     return validator.escape(str);
   }
 
   /**
    * Trim characters from the left-side of the input.
    */
-  ltrim(str: string, chars?: string[]): string {
+  public ltrim(str: string, chars?: string[]): string {
     return validator.ltrim(str, chars ? chars.join() : undefined);
   }
 
   /**
    * Canonicalize an email address.
    */
-  normalizeEmail(str: string, lowercase?: boolean): string | false {
+  public normalizeEmail(str: string, lowercase?: boolean): string | false {
     return validator.normalizeEmail(str, { all_lowercase: lowercase });
   }
 
   /**
    * Trim characters from the right-side of the input.
    */
-  rtrim(str: string, chars?: string[]): string {
+  public rtrim(str: string, chars?: string[]): string {
     return validator.rtrim(str, chars ? chars.join() : undefined);
   }
 
@@ -108,7 +85,7 @@ export class Sanitizer {
    * If keepNewLines is true, newline characters are preserved (\n and \r, hex 0xA and 0xD).
    * Unicode-safe in JavaScript.
    */
-  stripLow(str: string, keepNewLines?: boolean): string {
+  public stripLow(str: string, keepNewLines?: boolean): string {
     return validator.stripLow(str, keepNewLines);
   }
 
@@ -116,7 +93,7 @@ export class Sanitizer {
    * Convert the input to a boolean.
    * Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
    */
-  toBoolean(input: any, isStrict?: boolean): boolean {
+  public toBoolean(input: any, isStrict?: boolean): boolean {
     if (typeof input === 'string') {
       return validator.toBoolean(input, isStrict);
     }
@@ -126,7 +103,7 @@ export class Sanitizer {
   /**
    * Convert the input to a date, or null if the input is not a date.
    */
-  toDate(input: any): Date | null {
+  public toDate(input: any): Date | null {
     if (input instanceof Date) {
       return input;
     }
@@ -136,7 +113,7 @@ export class Sanitizer {
   /**
    * Convert the input to a float.
    */
-  toFloat(input: any): number {
+  public toFloat(input: any): number {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return validator.toFloat('' + input);
   }
@@ -144,7 +121,7 @@ export class Sanitizer {
   /**
    * Convert the input to an integer, or NaN if the input is not an integer.
    */
-  toInt(input: any, radix?: number): number {
+  public toInt(input: any, radix?: number): number {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return validator.toInt('' + input, radix);
   }
@@ -152,7 +129,7 @@ export class Sanitizer {
   /**
    * Convert the input to a string.
    */
-  toString(input: any): string {
+  public toString(input: any): string {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return '' + input;
   }
@@ -160,7 +137,7 @@ export class Sanitizer {
   /**
    * Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.
    */
-  trim(str: string, chars?: string[]): string {
+  public trim(str: string, chars?: string[]): string {
     return validator.trim(str, chars ? chars.join() : undefined);
   }
 
@@ -168,16 +145,16 @@ export class Sanitizer {
    * Remove characters that do not appear in the whitelist.
    * The characters are used in a RegExp and so you will need to escape some chars, e.g. whitelist(input, '\\[\\]').
    */
-  whitelist(str: string, chars: string): string;
-  whitelist(str: string, chars: RegExp): string;
-  whitelist(str: string, chars: RegExp | string): string {
-    return validator.whitelist(str, <string>chars);
+  public whitelist(str: string, chars: string): string {
+    return validator.whitelist(str, chars);
   }
 
-  // -------------------------------------------------------------------------
-  // Private Methods
-  // -------------------------------------------------------------------------
-
+  /**
+   * Sanitizes a single value based on the received metadata.
+   *
+   * @param value the value to sanitize
+   * @param metadata the metadata for the given property
+   */
   private sanitizeValue(value: any, metadata: SanitationMetadata): any {
     switch (metadata.type) {
       case SanitizeTypes.BLACKLIST:
@@ -207,21 +184,20 @@ export class Sanitizer {
       case SanitizeTypes.WHITELIST:
         return this.whitelist(value, metadata.value1);
       case SanitizeTypes.CUSTOM_SANITIZATION:
-        return this.metadataStorage
-          .getSanitizeConstraintsForClassConstructor(metadata.value1)
-          .map(sanitizerMetadata => {
-            if (!sanitizerMetadata.instance) sanitizerMetadata.instance = this.createInstance(sanitizerMetadata.target);
+        return (
+          this.metadataStorage
+            .getSanitizeConstraintsForClassConstructor(metadata.value1)
+            .map(sanitizerMetadata => {
+              if (!sanitizerMetadata.instance) sanitizerMetadata.instance = new sanitizerMetadata.target();
 
-            return sanitizerMetadata.instance;
-          })
-          .reduce((result, sanitizer) => sanitizer.sanitize(result), value);
+              return sanitizerMetadata.instance;
+            })
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            .reduce((result, sanitizer) => sanitizer!.sanitize(result), value)
+        );
 
       default:
         throw Error(`Wrong sanitation type is supplied ${metadata.type} for value ${value}`);
     }
-  }
-
-  private createInstance(object: Function): CustomSanitizer {
-    return this._container ? this._container.get(object) : new (<any>object)();
   }
 }

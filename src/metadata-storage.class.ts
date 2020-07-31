@@ -26,9 +26,11 @@ export class MetadataStorage {
 
     switch (type) {
       case 'sanitation':
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.sanitationMetadataStore.get(metadata.target)!.push(metadata as SanitationMetadata);
         break;
       case 'constraint':
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.constraintMetadatasStore.get(metadata.target)!.push(metadata as ConstraintMetadata);
         break;
     }
