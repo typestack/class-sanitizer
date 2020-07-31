@@ -10,41 +10,6 @@ export class Sanitizer {
   private metadataStorage = defaultMetadataStorage;
 
   /**
-   * Performs sanitation of the given object based on the decorator annotations in the class definition.
-   */
-  public sanitize<T = Record<string, any>>(classInstance: Record<string, any>): T {
-    this.metadataStorage
-      .getSanitizeMetadatasForClassInstance(classInstance)
-      .filter(metadata => !!classInstance[metadata.propertyName])
-      .forEach(metadata => {
-        /** If `each` is set we validate the values of the array.  */
-        if (metadata.each) {
-          if (!Array.isArray(classInstance[metadata.propertyName])) {
-            throw new Error(`Received a non-array value when expected array ('each' was set to true).`);
-          }
-
-          (classInstance[metadata.propertyName] as any[]).forEach((value, index) => {
-            classInstance[metadata.propertyName][index] = this.sanitizeValue(value, metadata);
-          });
-        } else {
-          classInstance[metadata.propertyName] = this.sanitizeValue(classInstance[metadata.propertyName], metadata);
-        }
-      });
-
-    // todo: implemented nested sanitation
-    return classInstance as T;
-  }
-
-  /**
-   * Performs sanitation of the given object based on annotations used in given object class.
-   * Performs in async-style, useful to use it in chained promises.
-   */
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async sanitizeAsync<T>(classInstance: T): Promise<T> {
-    return this.sanitize<T>(classInstance);
-  }
-
-  /**
    * Remove characters that appear in the blacklist. The characters are used in a RegExp and so you will need to
    * escape some chars, e.g @Blacklist('\\[\\]')
    */
@@ -150,6 +115,41 @@ export class Sanitizer {
   }
 
   /**
+   * Performs sanitation of the given object based on the decorator annotations in the class definition.
+   */
+  public sanitize<T = Record<string, any>>(classInstance: InstanceType<any>): T {
+    this.metadataStorage
+      .getSanitizeMetadatasForClassInstance(classInstance)
+      .filter(metadata => !!classInstance[metadata.propertyName])
+      .forEach(metadata => {
+        /** If `each` is set we validate the values of the array.  */
+        if (metadata.each) {
+          if (!Array.isArray(classInstance[metadata.propertyName])) {
+            throw new Error(`Received a non-array value when expected array ('each' was set to true).`);
+          }
+
+          (classInstance[metadata.propertyName] as any[]).forEach((value, index) => {
+            classInstance[metadata.propertyName][index] = this.sanitizeValue(value, metadata);
+          });
+        } else {
+          classInstance[metadata.propertyName] = this.sanitizeValue(classInstance[metadata.propertyName], metadata);
+        }
+      });
+
+    // todo: implemented nested sanitation
+    return classInstance as T;
+  }
+
+  /**
+   * Performs sanitation of the given object based on annotations used in given object class.
+   * Performs in async-style, useful to use it in chained promises.
+   */
+  // eslint-disable-next-line @typescript-eslint/require-await
+  public async sanitizeAsync<T>(classInstance: T): Promise<T> {
+    return this.sanitize<T>(classInstance);
+  }
+
+  /**
    * Sanitizes a single value based on the received metadata.
    *
    * @param value the value to sanitize
@@ -187,13 +187,9 @@ export class Sanitizer {
         return (
           this.metadataStorage
             .getSanitizeConstraintsForClassConstructor(metadata.value1)
-            .map(sanitizerMetadata => {
-              if (!sanitizerMetadata.instance) sanitizerMetadata.instance = new sanitizerMetadata.target();
-
-              return sanitizerMetadata.instance;
-            })
+            // Here the value must exists because we create it when registering the decorators.
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            .reduce((result, sanitizer) => sanitizer!.sanitize(result), value)
+            .reduce((result, sanitizer) => sanitizer.instance!.sanitize(result), value)
         );
 
       default:

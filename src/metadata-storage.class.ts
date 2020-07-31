@@ -32,6 +32,13 @@ export class MetadataStorage {
       case 'constraint':
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.constraintMetadatasStore.get(metadata.target)!.push(metadata as ConstraintMetadata);
+        try {
+          (metadata as ConstraintMetadata).instance = new (metadata as ConstraintMetadata).target();
+        } catch {
+          throw Error(
+            'Error while registering decorator metadata, cannot create CustomSanitizer instance from received class definition.'
+          );
+        }
         break;
     }
   }
