@@ -13,36 +13,36 @@ export class Sanitizer {
    * Remove characters that appear in the blacklist. The characters are used in a RegExp and so you will need to
    * escape some chars, e.g @Blacklist('\\[\\]')
    */
-  public blacklist(str: string, chars: string): string {
+  public static blacklist(str: string, chars: string): string {
     return validator.blacklist(str, chars);
   }
 
   /**
    * Replace <, >, &, ', " and / with HTML entities.
    */
-  public escape(str: string): string {
+  public static escape(str: string): string {
     return validator.escape(str);
   }
 
   /**
    * Trim characters from the left-side of the input.
    */
-  public ltrim(str: string, chars?: string[]): string {
-    return validator.ltrim(str, chars ? chars.join() : undefined);
+  public static ltrim(str: string, chars?: string): string {
+    return validator.ltrim(str, chars);
   }
 
   /**
    * Canonicalize an email address.
    */
-  public normalizeEmail(str: string, lowercase?: boolean): string | false {
+  public static normalizeEmail(str: string, lowercase?: boolean): string | false {
     return validator.normalizeEmail(str, { all_lowercase: lowercase });
   }
 
   /**
    * Trim characters from the right-side of the input.
    */
-  public rtrim(str: string, chars?: string[]): string {
-    return validator.rtrim(str, chars ? chars.join() : undefined);
+  public static rtrim(str: string, chars?: string): string {
+    return validator.rtrim(str, chars);
   }
 
   /**
@@ -50,7 +50,7 @@ export class Sanitizer {
    * If keepNewLines is true, newline characters are preserved (\n and \r, hex 0xA and 0xD).
    * Unicode-safe in JavaScript.
    */
-  public stripLow(str: string, keepNewLines?: boolean): string {
+  public static stripLow(str: string, keepNewLines?: boolean): string {
     return validator.stripLow(str, keepNewLines);
   }
 
@@ -58,7 +58,7 @@ export class Sanitizer {
    * Convert the input to a boolean.
    * Everything except for '0', 'false' and '' returns true. In strict mode only '1' and 'true' return true.
    */
-  public toBoolean(input: any, isStrict?: boolean): boolean {
+  public static toBoolean(input: any, isStrict?: boolean): boolean {
     if (typeof input === 'string') {
       return validator.toBoolean(input, isStrict);
     }
@@ -68,7 +68,7 @@ export class Sanitizer {
   /**
    * Convert the input to a date, or null if the input is not a date.
    */
-  public toDate(input: any): Date | null {
+  public static toDate(input: any): Date | null {
     if (input instanceof Date) {
       return input;
     }
@@ -78,7 +78,7 @@ export class Sanitizer {
   /**
    * Convert the input to a float.
    */
-  public toFloat(input: any): number {
+  public static toFloat(input: any): number {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return validator.toFloat('' + input);
   }
@@ -86,7 +86,7 @@ export class Sanitizer {
   /**
    * Convert the input to an integer, or NaN if the input is not an integer.
    */
-  public toInt(input: any, radix?: number): number {
+  public static toInt(input: any, radix?: number): number {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return validator.toInt('' + input, radix);
   }
@@ -94,7 +94,7 @@ export class Sanitizer {
   /**
    * Convert the input to a string.
    */
-  public toString(input: any): string {
+  public static toString(input: any): string {
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return '' + input;
   }
@@ -102,15 +102,15 @@ export class Sanitizer {
   /**
    * Trim characters (whitespace by default) from both sides of the input. You can specify chars that should be trimmed.
    */
-  public trim(str: string, chars?: string[]): string {
-    return validator.trim(str, chars ? chars.join() : undefined);
+  public static trim(str: string, chars?: string): string {
+    return validator.trim(str, chars);
   }
 
   /**
    * Remove characters that do not appear in the whitelist.
    * The characters are used in a RegExp and so you will need to escape some chars, e.g. whitelist(input, '\\[\\]').
    */
-  public whitelist(str: string, chars: string): string {
+  public static whitelist(str: string, chars: string): string {
     return validator.whitelist(str, chars);
   }
 
@@ -163,31 +163,31 @@ export class Sanitizer {
   private sanitizeValue(value: any, metadata: SanitationMetadata): any {
     switch (metadata.type) {
       case SanitizeTypes.BLACKLIST:
-        return this.blacklist(value, metadata.value1);
+        return Sanitizer.blacklist(value, metadata.value1);
       case SanitizeTypes.ESCAPE:
-        return this.escape(value);
+        return Sanitizer.escape(value);
       case SanitizeTypes.LTRIM:
-        return this.ltrim(value, metadata.value1);
+        return Sanitizer.ltrim(value, metadata.value1);
       case SanitizeTypes.NORMALIZE_EMAIL:
-        return this.normalizeEmail(value, metadata.value1);
+        return Sanitizer.normalizeEmail(value, metadata.value1);
       case SanitizeTypes.RTRIM:
-        return this.rtrim(value, metadata.value1);
+        return Sanitizer.rtrim(value, metadata.value1);
       case SanitizeTypes.STRIP_LOW:
-        return this.stripLow(value, metadata.value1);
+        return Sanitizer.stripLow(value, metadata.value1);
       case SanitizeTypes.TO_BOOLEAN:
-        return this.toBoolean(value, metadata.value1);
+        return Sanitizer.toBoolean(value, metadata.value1);
       case SanitizeTypes.TO_DATE:
-        return this.toDate(value);
+        return Sanitizer.toDate(value);
       case SanitizeTypes.TO_FLOAT:
-        return this.toFloat(value);
+        return Sanitizer.toFloat(value);
       case SanitizeTypes.TO_INT:
-        return this.toInt(value, metadata.value1);
+        return Sanitizer.toInt(value, metadata.value1);
       case SanitizeTypes.TO_STRING:
-        return this.toString(value);
+        return Sanitizer.toString(value);
       case SanitizeTypes.TRIM:
-        return this.trim(value, metadata.value1);
+        return Sanitizer.trim(value, metadata.value1);
       case SanitizeTypes.WHITELIST:
-        return this.whitelist(value, metadata.value1);
+        return Sanitizer.whitelist(value, metadata.value1);
       case SanitizeTypes.CUSTOM_SANITIZATION:
         return (
           this.metadataStorage

@@ -7,7 +7,7 @@ describe('Blacklist', () => {
 
   it('should remove characters defined in parameter', () => {
     class TestClass {
-      @Blacklist(/b/)
+      @Blacklist('b')
       text: string;
     }
 
@@ -21,7 +21,7 @@ describe('Blacklist', () => {
 
   it('should remove characters defined in array property with "each: true"', () => {
     class TestClass {
-      @Blacklist(/b/, { each: true })
+      @Blacklist('b', { each: true })
       text: string[];
     }
 

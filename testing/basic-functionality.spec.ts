@@ -47,7 +47,7 @@ describe('Basic Functionality', () => {
 
   it('can validate values in arrays', () => {
     class TestClass {
-      @Trim([' '], { each: true })
+      @Trim(' ', { each: true })
       texts: string[];
     }
 
@@ -93,9 +93,7 @@ describe('Basic Functionality', () => {
   });
 
   it('should support manual sanitation', () => {
-    const instannce = new Sanitizer();
-
-    expect(instannce.trim(' test ')).toBe('test');
+    expect(Sanitizer.trim(' test ')).toBe('test');
   });
 
   it('should do nothing with unknown input', () => {
