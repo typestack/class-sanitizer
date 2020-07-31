@@ -1,7 +1,7 @@
 {
   "name": "class-sanitizer",
   "private": true,
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "Decorator based class property sanitation in Typescript.",
   "license": "MIT",
   "author": {
