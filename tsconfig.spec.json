@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strict": false,
+    "strictPropertyInitialization": false,
+    "sourceMap": true,
+    "removeComments": true,
+    "noImplicitAny": false,
+  },
+  "exclude": ["node_modules"]
+}

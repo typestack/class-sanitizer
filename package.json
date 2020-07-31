@@ -22,37 +22,18 @@
     "typescript",
     "typescript-sanitizer"
   ],
+  "scripts": {
+    "build": "rimraf build && tsc --project tsconfig.prod.json"
+  },
   "dependencies": {
     "validator": "^5.1.0"
   },
   "devDependencies": {
-    "@types/assertion-error": "^1.0.30",
-    "@types/chai": "^3.4.35",
-    "@types/chai-as-promised": "^0.0.29",
-    "@types/es6-shim": "^0.31.32",
-    "@types/gulp": "^3.8.32",
-    "@types/mocha": "^2.2.0",
     "@types/node": "^7.0.5",
-    "@types/sinon": "^1.16.35",
     "@types/validator": "^5.1.0",
-    "chai": "^3.4.1",
-    "chai-as-promised": "^5.2.0",
-    "del": "^2.0.2",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^2.2.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-shell": "^0.5.0",
-    "gulp-tslint": "^4.3.3",
-    "gulpclass": "0.1.0",
-    "mocha": "^2.3.4",
-    "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0",
-    "ts-node": "^2.1.0",
+    "rimraf": "^3.0.2",
     "tslint": "^3.5.0",
     "tslint-stylish": "^2.1.0-beta",
-    "typescript": "^2.2.1"
-  },
-  "scripts": {
-    "test": "./node_modules/.bin/gulp tests"
-  }
+    "typescript": "^3.9.7"
+  }  
 }
